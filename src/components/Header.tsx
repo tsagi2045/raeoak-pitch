@@ -61,7 +61,7 @@ export default function Header({
               fontWeight: 700,
             }}
           >
-            라이옥 가맹점 모집 LP — 사전 질문지
+            라이옥 가맹점 모집 랜딩페이지 — 사전 질문지
           </h1>
           <span
             className="shrink-0"
