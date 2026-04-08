@@ -9,21 +9,30 @@ tags: [index, 목차]
 
 ## Sources (원본 요약)
 
-_(아직 인제스트된 소스 없음)_
+- [[raw-01-summary]] — 시장 조사 (외식 프랜차이즈, 쌀국수 카테고리, 소비자 트렌드)
 
 ## Concepts (개념)
 
-_(아직 생성된 개념 페이지 없음)_
+_(인제스트 진행 중)_
 
 ## Entities (엔티티)
 
-_(아직 생성된 엔티티 페이지 없음)_
+_(인제스트 진행 중)_
 
-## 인제스트 대기 소스 (docs/)
+## 인제스트 대기 소스
 
-- `docs/01-market-research.md` — 시장 조사
 - `docs/02-competitor-analysis.md` — 경쟁사 분석
 - `docs/03-target-audience.md` — 타겟 오디언스
 - `docs/04-market-sizing.md` — 시장 규모 추정
 - `docs/05-customer-journey.md` — 고객 여정 매핑
 - `docs/06-meeting-preparation.md` — 클라이언트 미팅 준비
+
+## Missing Pages
+
+- [[시장-기회]] — SWOT 기회/위협 요인
+- [[소자본-창업]] — MZ세대 창업 트렌드
+- [[배달-시장]] — 40조원 배달 시장
+- [[미분당]] — 프리미엄 쌀국수 1위 (144개)
+- [[미스사이공]] — 2위 브랜드 (90개)
+- [[포메인]] — 15년 원조 브랜드
+- [[에머이]] — 서울 중심 확장

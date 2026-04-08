@@ -11,3 +11,9 @@ updated: 2026-04-08
 - 디렉토리 생성: raw/, wiki/sources/, wiki/concepts/, wiki/entities/, wiki/output/
 - CLAUDE.md, rules/wiki-schema.md 생성
 - 인제스트 대기 소스 6개 (docs/)
+
+## 2026-04-08 ingest | raw-01-market-research
+
+- **원본**: docs/01-market-research.md → raw/raw-01-market-research.md
+- **생성**: wiki/sources/raw-01-summary.md (시장 조사 요약)
+- **갱신**: wiki/index.md (1페이지 등록 + Missing Pages 7개)
