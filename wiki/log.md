@@ -33,3 +33,8 @@ updated: 2026-04-08
 
 - **원본**: docs/04-market-sizing.md → raw/raw-04-market-sizing.md
 - **생성**: wiki/sources/raw-04-summary.md (TAM 3.55조 / SAM 478억 / SOM 47억)
+
+## 2026-04-08 ingest | raw-05-customer-journey
+
+- **원본**: docs/05-customer-journey.md → raw/raw-05-customer-journey.md
+- **생성**: wiki/sources/raw-05-summary.md (6단계 고객 여정, 전환율, 랜딩페이지 역할)
