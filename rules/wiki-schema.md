@@ -48,6 +48,27 @@ tags: [tag1, tag2]
 4. Missing Pages (참조되었으나 아직 없는 페이지) 목록
 5. 다음 조사 질문 제안
 
+## raw 파일 작성 컨벤션
+
+### 파일명
+`raw/raw-{NN}-{kebab-name}.md` (번호는 생성 순서, 01부터)
+
+### frontmatter (권장)
+```yaml
+---
+title: 문서 제목
+source: 원본 출처 (URL, "카톡 채팅방명", "직접 작성" 등)
+created: YYYY-MM-DD
+type: research | chatlog | meeting | clip
+---
+```
+
+### type별 구조
+- **research**: 제목 → 개요 → 본문(섹션별) → 핵심 시사점 → 참고자료
+- **chatlog**: 출처/기간/상태 → 참여인원 → 타임라인(시간순) → 인사이트
+- **meeting**: 참석자 → 아젠다 → 논의내용(Q&A) → 액션아이템
+- **clip**: 원본 URL → 캡쳐일 → 핵심 내용 요약 → 원문 발췌
+
 ## 금지 사항
 
 - `raw/` 파일을 절대 수정하지 않는다
