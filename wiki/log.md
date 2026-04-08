@@ -38,3 +38,8 @@ updated: 2026-04-08
 
 - **원본**: docs/05-customer-journey.md → raw/raw-05-customer-journey.md
 - **생성**: wiki/sources/raw-05-summary.md (6단계 고객 여정, 전환율, 랜딩페이지 역할)
+
+## 2026-04-08 ingest | raw-06-meeting-preparation
+
+- **원본**: docs/06-meeting-preparation.md → raw/raw-06-meeting-preparation.md
+- **생성**: wiki/sources/raw-06-summary.md (90분 미팅 아젠다, 28개 질문, 가맹사업법)

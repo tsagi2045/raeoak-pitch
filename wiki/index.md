@@ -14,6 +14,7 @@ tags: [index, 목차]
 - [[raw-03-summary]] — 타겟 오디언스 (3 페르소나, JTBD, CTA 차별화)
 - [[raw-04-summary]] — 시장 규모 TAM/SAM/SOM (TAM 3.55조, SAM 478억, SOM 47억)
 - [[raw-05-summary]] — 고객 여정 매핑 (6단계, 3~6개월, 랜딩=탐색→관심 전환)
+- [[raw-06-summary]] — 클라이언트 미팅 준비 (28개 질문, 체크리스트, 가맹사업법)
 
 ## Concepts (개념)
 
@@ -24,8 +25,6 @@ _(인제스트 진행 중)_
 _(인제스트 진행 중)_
 
 ## 인제스트 대기 소스
-
-- `docs/06-meeting-preparation.md` — 클라이언트 미팅 준비
 
 ## Missing Pages
 
