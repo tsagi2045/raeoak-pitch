@@ -12,6 +12,7 @@ tags: [index, 목차]
 - [[raw-01-summary]] — 시장 조사 (외식 프랜차이즈, 쌀국수 카테고리, 소비자 트렌드)
 - [[raw-02-summary]] — 경쟁사 분석 (10개 브랜드 벤치마킹, 랜딩페이지, 차별화 기회)
 - [[raw-03-summary]] — 타겟 오디언스 (3 페르소나, JTBD, CTA 차별화)
+- [[raw-04-summary]] — 시장 규모 TAM/SAM/SOM (TAM 3.55조, SAM 478억, SOM 47억)
 
 ## Concepts (개념)
 
@@ -23,7 +24,6 @@ _(인제스트 진행 중)_
 
 ## 인제스트 대기 소스
 
-- `docs/04-market-sizing.md` — 시장 규모 추정
 - `docs/05-customer-journey.md` — 고객 여정 매핑
 - `docs/06-meeting-preparation.md` — 클라이언트 미팅 준비
 

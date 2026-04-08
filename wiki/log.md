@@ -28,3 +28,8 @@ updated: 2026-04-08
 
 - **원본**: docs/03-target-audience.md → raw/raw-03-target-audience.md
 - **생성**: wiki/sources/raw-03-summary.md (3 페르소나 + CTA 차별화)
+
+## 2026-04-08 ingest | raw-04-market-sizing
+
+- **원본**: docs/04-market-sizing.md → raw/raw-04-market-sizing.md
+- **생성**: wiki/sources/raw-04-summary.md (TAM 3.55조 / SAM 478억 / SOM 47억)
