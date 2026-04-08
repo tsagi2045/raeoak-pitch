@@ -72,3 +72,14 @@ updated: 2026-04-08
 - **참조**: 6개 페이지 ([[포메인]], [[랜딩페이지-전략]], [[가맹-조건]], [[시장-기회]], [[raw-03-summary]], [[raw-05-summary]])
 - **생성**: wiki/output/투명성-차별화-설계.md
 - **결론**: 포메인의 비용 비공개 + 직영점 데이터만 제시하는 약점을 투자비 구성 분해 + 정보공개서 기반 가맹점 매출 공개로 공략. D5(데이터 공개 범위)가 전략의 열쇠.
+
+## 2026-04-08 ingest | raw-07-raeoak-profile
+
+- **원본**: raw/raw-07-raeoak-profile.md (웹 조사 기반 라이옥 브랜드 프로필)
+- **생성**:
+  - wiki/sources/raw-07-summary.md — 라이옥 프로필 요약 (연혁, USP, 매장, 웹 현황)
+  - wiki/entities/라이옥.md — 클라이언트 브랜드 엔티티 (핵심 인물, 인프라, 경쟁사 비교)
+- **갱신**:
+  - wiki/concepts/랜딩페이지-전략.md — 라이옥 현재 웹사이트(cafe24) 분석 + 비교표 추가
+  - wiki/concepts/가맹-조건.md — 비용 비교표에 라이옥 추가 + 가맹 현황 섹션 추가
+  - wiki/index.md — Sources에 raw-07, Entities에 라이옥 추가
