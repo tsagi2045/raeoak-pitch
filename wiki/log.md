@@ -17,3 +17,9 @@ updated: 2026-04-08
 - **원본**: docs/01-market-research.md → raw/raw-01-market-research.md
 - **생성**: wiki/sources/raw-01-summary.md (시장 조사 요약)
 - **갱신**: wiki/index.md (1페이지 등록 + Missing Pages 7개)
+
+## 2026-04-08 ingest | raw-02-competitor-analysis
+
+- **원본**: docs/02-competitor-analysis.md → raw/raw-02-competitor-analysis.md
+- **생성**: wiki/sources/raw-02-summary.md (경쟁사 10개 브랜드 분석 요약)
+- **갱신**: wiki/index.md (1페이지 등록 + Missing Pages 2개 추가)
