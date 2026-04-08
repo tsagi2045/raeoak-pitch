@@ -23,3 +23,8 @@ updated: 2026-04-08
 - **원본**: docs/02-competitor-analysis.md → raw/raw-02-competitor-analysis.md
 - **생성**: wiki/sources/raw-02-summary.md (경쟁사 10개 브랜드 분석 요약)
 - **갱신**: wiki/index.md (1페이지 등록 + Missing Pages 2개 추가)
+
+## 2026-04-08 ingest | raw-03-target-audience
+
+- **원본**: docs/03-target-audience.md → raw/raw-03-target-audience.md
+- **생성**: wiki/sources/raw-03-summary.md (3 페르소나 + CTA 차별화)
