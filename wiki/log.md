@@ -58,3 +58,10 @@ updated: 2026-04-08
   - wiki/entities/포메인.md — 19년 원조, 유일한 독립 가맹 사이트
   - wiki/entities/에머이.md — 서울 중심 확장, 1.24억
 - **갱신**: wiki/index.md (Concepts 5개, Entities 4개 등록, Missing Pages 해소)
+
+## 2026-04-08 lint | 무결성 점검
+
+- **결과**: 깨진 wikilink 0, Missing Pages 0, Orphan 0, Frontmatter 정상
+- **교차 참조 수정 2건**:
+  - wiki/concepts/시장-기회.md 출처에 raw-03, raw-05, raw-06 추가
+  - wiki/concepts/랜딩페이지-전략.md 출처에 raw-04 추가
