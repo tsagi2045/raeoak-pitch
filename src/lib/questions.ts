@@ -26,19 +26,19 @@ export type Answers = Record<string, Answer>;
 
 export const categories: Category[] = [
   {
-    id: "D",
-    label: "D",
+    id: "A",
+    label: "A",
     title: "조민서 대표님 / 본사 관계",
     questions: [
       {
-        id: "D1",
+        id: "A1",
         question:
           "프랜차이즈 사업을 어떻게 시작하게 되셨나요? 본사(문건우 대표님)와는 어떤 관계이신가요?",
         type: "text",
         textPlaceholder: "자유롭게 서술해주세요",
       },
       {
-        id: "D2",
+        id: "A2",
         question:
           "본사로부터 어떤 지원(물류, 레시피, 교육, 마케팅 등)을 받고 계시고, 의사결정 권한은 어디까지인가요?",
         descriptions: [
@@ -48,7 +48,7 @@ export const categories: Category[] = [
         textPlaceholder: "지원 범위와 의사결정 권한을 알려주세요",
       },
       {
-        id: "D3",
+        id: "A3",
         question: "랜딩페이지 제작 시 제약 사항이 있나요?",
         descriptions: [
           "사용 금지 표현, 본사 승인 필요 항목, 공개 불가 정보 등",
@@ -59,12 +59,12 @@ export const categories: Category[] = [
     ],
   },
   {
-    id: "C",
-    label: "C",
+    id: "B",
+    label: "B",
     title: "브랜드/운영 확인",
     questions: [
       {
-        id: "C1",
+        id: "B1",
         question: "라이옥의 차별성이 뭐라고 생각하시나요?",
         descriptions: [
           '저희가 조사한 바로는 "13시간 육수, 베트남인 80% 고객, 재료 원칙 고수"인데 맞는지 확인 겸 여쭤봅니다.',
@@ -73,7 +73,7 @@ export const categories: Category[] = [
         textPlaceholder: "라이옥만의 차별성을 자유롭게 작성해주세요",
       },
       {
-        id: "C2",
+        id: "B2",
         question: "현재 가맹 문의가 들어오는 경로가 있나요?",
         descriptions: [
           "전화, 웹사이트, 지인 소개, 박람회 등",
@@ -90,14 +90,14 @@ export const categories: Category[] = [
         textPlaceholder: "기타 경로가 있으면 입력해주세요",
       },
       {
-        id: "C3",
+        id: "B3",
         question:
           "가맹점주 교육 기간과 오픈까지 걸리는 시간은 대략 어느 정도인가요?",
         type: "text",
         textPlaceholder: "예: 교육 2주, 오픈까지 약 2개월",
       },
       {
-        id: "C4",
+        id: "B4",
         question: "미아점 초기 반응은 어떤가요?",
         descriptions: [
           "매출, 고객 반응 등 랜딩페이지에 활용 가능한 수준이면 좋겠습니다.",
@@ -108,12 +108,12 @@ export const categories: Category[] = [
     ],
   },
   {
-    id: "B",
-    label: "B",
+    id: "C",
+    label: "C",
     title: "랜딩페이지 소재",
     questions: [
       {
-        id: "B1",
+        id: "C1",
         question:
           "랜딩페이지 제작에 필요한 소재를 공유해주실 수 있나요?",
         descriptions: [
@@ -135,12 +135,12 @@ export const categories: Category[] = [
     ],
   },
   {
-    id: "A",
-    label: "A",
+    id: "D",
+    label: "D",
     title: "랜딩페이지 데이터 공개 여부",
     questions: [
       {
-        id: "A1",
+        id: "D1",
         question:
           "가맹 비용(가맹비, 교육비, 인테리어 등)을 랜딩페이지에 공개할 의향이 있으신가요?",
         descriptions: [
@@ -152,7 +152,7 @@ export const categories: Category[] = [
         textPlaceholder: "세부 의견이 있으시면 입력해주세요",
       },
       {
-        id: "A2",
+        id: "D2",
         question: "매출/수익 데이터가 어필에 유리한 수준인가요?",
         descriptions: [
           "유리하다면 랜딩페이지에 올리면 강력한 설득 포인트가 됩니다.",
@@ -162,7 +162,7 @@ export const categories: Category[] = [
         textPlaceholder: "가능하면 구체 수치를 알려주세요",
       },
       {
-        id: "A3",
+        id: "D3",
         question: "소형 매장이나 배달 특화 모델이 있나요?",
         descriptions: [
           "있다면 소자본 창업자를 위한 별도 섹션을 랜딩페이지에 만들 수 있습니다.",
