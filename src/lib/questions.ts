@@ -39,9 +39,10 @@ export const categories: Category[] = [
       {
         id: "A1",
         question:
-          "본사(문건우 대표님)와의 인연부터 가맹사업을 시작하게 된 과정을 알려주세요.",
+          "본사(문건우 대표님)와의 관계, 그리고 가맹사업을 시작하게 된 배경을 알려주세요.",
         descriptions: [
-          "랜딩페이지에 대표님의 스토리를 담으면 신뢰감을 줄 수 있어서 여쭤봅니다.",
+          "세부적인 내용을 알수록 랜딩페이지 기획뿐 아니라 추후 운영·확장 방향을 잡는 데 도움이 됩니다.",
+          "본사와의 역할 분담, 브랜드에 대한 비전 등 편하게 공유해주시면 됩니다.",
         ],
         type: "text",
         textPlaceholder: "자유롭게 서술해주세요",
@@ -101,10 +102,6 @@ export const categories: Category[] = [
           "위 내용 중 수정할 부분이나, 추가 차별점을 알려주세요",
         links: [
           {
-            label: "다이닝코드 라이옥 본점",
-            url: "https://www.diningcode.com/profile.php?rid=nn9jKGOzaR",
-          },
-          {
             label: "라이옥 공식 사이트",
             url: "https://raeoakfood.co.kr",
           },
@@ -127,12 +124,6 @@ export const categories: Category[] = [
           "아직 별도 문의 경로 없음",
         ],
         textPlaceholder: "기타 경로가 있으면 입력해주세요",
-        links: [
-          {
-            label: "현재 가맹안내 페이지",
-            url: "https://raeoakfood.co.kr/article/%EA%B0%80%EB%A7%B9%EC%95%88%EB%82%B4/5/1/",
-          },
-        ],
       },
       {
         id: "B3",
@@ -199,12 +190,6 @@ export const categories: Category[] = [
         type: "radio-text",
         options: ["공개 의향 있음", "비공개 선호", "미정 — 미팅에서 논의"],
         textPlaceholder: "세부 의견이 있으시면 입력해주세요",
-        links: [
-          {
-            label: "경쟁사 참고: 미분당 (비용 공개 사례)",
-            url: "https://myfranch.kr/brand/1822",
-          },
-        ],
       },
       {
         id: "D2",
@@ -223,6 +208,36 @@ export const categories: Category[] = [
       },
       {
         id: "D3",
+        question:
+          "경쟁사 랜딩페이지에 아래와 같은 섹션들이 있는데, 라이옥도 넣을 수 있을까요?",
+        descriptions: [
+          "포메인 등 경쟁사의 가맹 페이지를 참고했습니다. 가능한 항목에 체크해주세요.",
+        ],
+        type: "checkbox-text",
+        options: [
+          "브랜드 스토리 (창업 배경, 철학)",
+          "본사 지원 시스템 (상권분석, SV 관리)",
+          "교육 프로그램 상세",
+          "인테리어 시공 사례",
+          "매출/수익 사례 (실제 가맹점 기준)",
+          "가맹 절차 안내 (단계별 프로세스)",
+          "가맹점주 인터뷰/후기",
+        ],
+        textPlaceholder:
+          "추가 의견이나 넣고 싶은 콘텐츠가 있으면 알려주세요",
+        links: [
+          {
+            label: "경쟁사 참고: 포메인 메인",
+            url: "https://www.phomein.com/brand/main/main.do",
+          },
+          {
+            label: "포메인 가맹안내",
+            url: "https://www.phomein.com/company/franchisee/step02.do",
+          },
+        ],
+      },
+      {
+        id: "D4",
         question: "소형 매장이나 배달 특화 모델이 있나요?",
         descriptions: [
           "있다면 소자본 창업자를 위한 별도 섹션을 만들어 타겟을 넓힐 수 있습니다.",

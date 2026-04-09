@@ -2,6 +2,8 @@
 
 import { categories } from "@/lib/questions";
 
+export const BRIEFING_TAB_ID = "_briefing";
+
 interface CategoryTabsProps {
   activeCategory: string;
   onCategoryChange: (id: string) => void;
@@ -13,8 +15,28 @@ export default function CategoryTabs({
   onCategoryChange,
   getCategoryProgress,
 }: CategoryTabsProps) {
+  const isBriefingActive = activeCategory === BRIEFING_TAB_ID;
+
   return (
     <div className="scrollbar-hide flex gap-[var(--space-1)] overflow-x-auto">
+      {/* Briefing tab */}
+      <button
+        onClick={() => onCategoryChange(BRIEFING_TAB_ID)}
+        className="shrink-0 flex items-center gap-[var(--space-2)] transition-all duration-150 ease-out active:scale-[0.97]"
+        style={{
+          borderRadius: "var(--radius-pill)",
+          padding: "8px 16px",
+          fontSize: "13px",
+          fontWeight: 600,
+          lineHeight: 1,
+          background: isBriefingActive ? "var(--accent)" : "var(--bg-surface)",
+          color: isBriefingActive ? "#ffffff" : "var(--text-secondary)",
+        }}
+      >
+        미팅 브리핑
+      </button>
+
+      {/* Category tabs */}
       {categories.map((cat) => {
         const isActive = cat.id === activeCategory;
         const { done, total } = getCategoryProgress(cat.id);

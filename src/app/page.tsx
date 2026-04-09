@@ -3,8 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Header from "@/components/Header";
 import QuestionCard from "@/components/QuestionCard";
+import BriefingTab from "@/components/BriefingTab";
 import BottomBar from "@/components/BottomBar";
 import Toast from "@/components/Toast";
+import { BRIEFING_TAB_ID } from "@/components/CategoryTabs";
 import {
   categories,
   totalQuestions,
@@ -41,12 +43,17 @@ function countAnswered(answers: Answers): number {
   }).length;
 }
 
+// All tab IDs in order: briefing, then categories
+const allTabIds = [BRIEFING_TAB_ID, ...categories.map((c) => c.id)];
+
 export default function Home() {
   const [answers, setAnswers] = useState<Answers>({});
-  const [activeCategory, setActiveCategory] = useState(categories[0].id);
+  const [activeCategory, setActiveCategory] = useState(BRIEFING_TAB_ID);
   const [toast, setToast] = useState({ visible: false, message: "" });
   const [mounted, setMounted] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
+
+  const isBriefing = activeCategory === BRIEFING_TAB_ID;
 
   useEffect(() => {
     setAnswers(loadAnswers());
@@ -117,9 +124,13 @@ export default function Home() {
     }
   }, [showToast]);
 
-  const activeCat = categories.find((c) => c.id === activeCategory)!;
+  const activeCat = categories.find((c) => c.id === activeCategory);
   const answered = countAnswered(answers);
   const isComplete = answered === totalQuestions;
+
+  const currentTabIdx = allTabIds.indexOf(activeCategory);
+  const hasPrev = currentTabIdx > 0;
+  const hasNext = currentTabIdx < allTabIds.length - 1;
 
   return (
     <>
@@ -133,42 +144,55 @@ export default function Home() {
         ref={mainRef}
         className="mx-auto w-full max-w-[980px] px-[var(--space-6)] pt-[var(--space-8)] pb-[100px]"
       >
-        {/* Category Title */}
-        <h2
-          style={{
-            fontSize: "clamp(24px, 3.5vw, 32px)",
-            fontWeight: 800,
-            lineHeight: 1.15,
-            letterSpacing: "-1px",
-            color: "var(--text-primary)",
-            marginBottom: "var(--space-8)",
-          }}
-        >
-          {activeCat.label}. {activeCat.title}
-        </h2>
-
-        {/* Question Cards */}
-        <div className="flex flex-col gap-[var(--space-3)]">
-          {activeCat.questions.map((q) => (
-            <QuestionCard
-              key={q.id}
-              question={q}
-              answer={answers[q.id] ?? {}}
-              onChange={(a) => handleAnswerChange(q.id, a)}
-            />
-          ))}
-        </div>
-
-        {/* Category Navigation */}
-        <div className="mt-[var(--space-10)] flex justify-between">
-          {activeCategory !== categories[0].id ? (
-            <button
-              onClick={() => {
-                const idx = categories.findIndex(
-                  (c) => c.id === activeCategory
-                );
-                if (idx > 0) handleCategoryChange(categories[idx - 1].id);
+        {isBriefing ? (
+          <>
+            <h2
+              style={{
+                fontSize: "clamp(24px, 3.5vw, 32px)",
+                fontWeight: 800,
+                lineHeight: 1.15,
+                letterSpacing: "-1px",
+                color: "var(--text-primary)",
+                marginBottom: "var(--space-8)",
               }}
+            >
+              미팅 브리핑
+            </h2>
+            <BriefingTab />
+          </>
+        ) : (
+          <>
+            <h2
+              style={{
+                fontSize: "clamp(24px, 3.5vw, 32px)",
+                fontWeight: 800,
+                lineHeight: 1.15,
+                letterSpacing: "-1px",
+                color: "var(--text-primary)",
+                marginBottom: "var(--space-8)",
+              }}
+            >
+              {activeCat!.label}. {activeCat!.title}
+            </h2>
+
+            <div className="flex flex-col gap-[var(--space-3)]">
+              {activeCat!.questions.map((q) => (
+                <QuestionCard
+                  key={q.id}
+                  question={q}
+                  answer={answers[q.id] ?? {}}
+                  onChange={(a) => handleAnswerChange(q.id, a)}
+                />
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* Tab Navigation */}
+        <div className="mt-[var(--space-10)] flex justify-between">
+          {hasPrev ? (
+            <button
+              onClick={() => handleCategoryChange(allTabIds[currentTabIdx - 1])}
               className="transition-opacity duration-150 hover:opacity-80 active:scale-[0.97]"
               style={{
                 fontSize: "14px",
@@ -184,15 +208,9 @@ export default function Home() {
           ) : (
             <div />
           )}
-          {activeCategory !== categories[categories.length - 1].id ? (
+          {hasNext ? (
             <button
-              onClick={() => {
-                const idx = categories.findIndex(
-                  (c) => c.id === activeCategory
-                );
-                if (idx < categories.length - 1)
-                  handleCategoryChange(categories[idx + 1].id);
-              }}
+              onClick={() => handleCategoryChange(allTabIds[currentTabIdx + 1])}
               className="transition-opacity duration-150 hover:opacity-80 active:scale-[0.97]"
               style={{
                 fontSize: "14px",
