@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Header from "@/components/Header";
 import QuestionCard from "@/components/QuestionCard";
 import BriefingTab from "@/components/BriefingTab";
+import FileUpload from "@/components/FileUpload";
 import BottomBar from "@/components/BottomBar";
 import Toast from "@/components/Toast";
 import { BRIEFING_TAB_ID } from "@/components/CategoryTabs";
@@ -13,26 +14,15 @@ import {
   type Answers,
   type Answer,
 } from "@/lib/questions";
+import {
+  loadAnswers as loadFromSupabase,
+  saveAnswer,
+  clearAllAnswers,
+  migrateLocalToSupabase,
+  type UploadedFile,
+} from "@/lib/storage";
 
-const STORAGE_KEY = "raeoak-qa-answers";
-
-function loadAnswers(): Answers {
-  if (typeof window === "undefined") return {};
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : {};
-  } catch {
-    return {};
-  }
-}
-
-function saveAnswers(answers: Answers) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
-  } catch {
-    // ignore
-  }
-}
+const FILES_KEY = "raeoak-qa-files";
 
 function countAnswered(answers: Answers): number {
   return Object.values(answers).filter((a) => {
@@ -43,32 +33,49 @@ function countAnswered(answers: Answers): number {
   }).length;
 }
 
-// All tab IDs in order: briefing, then categories
-const allTabIds = [BRIEFING_TAB_ID, ...categories.map((c) => c.id)];
+const allTabIds = [BRIEFING_TAB_ID, ...categories.map((c) => c.id), "_files"];
 
 export default function Home() {
   const [answers, setAnswers] = useState<Answers>({});
   const [activeCategory, setActiveCategory] = useState(BRIEFING_TAB_ID);
   const [toast, setToast] = useState({ visible: false, message: "" });
   const [mounted, setMounted] = useState(false);
+  const [files, setFiles] = useState<UploadedFile[]>([]);
+  const debounceRef = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
   const mainRef = useRef<HTMLDivElement>(null);
 
   const isBriefing = activeCategory === BRIEFING_TAB_ID;
+  const isFiles = activeCategory === "_files";
 
   useEffect(() => {
-    setAnswers(loadAnswers());
-    setMounted(true);
+    (async () => {
+      await migrateLocalToSupabase();
+      const loaded = await loadFromSupabase();
+      setAnswers(loaded);
+      // Load files from localStorage
+      try {
+        const savedFiles = localStorage.getItem(FILES_KEY);
+        if (savedFiles) setFiles(JSON.parse(savedFiles));
+      } catch {}
+      setMounted(true);
+    })();
   }, []);
 
   useEffect(() => {
-    if (mounted) {
-      saveAnswers(answers);
+    if (mounted && files.length > 0) {
+      localStorage.setItem(FILES_KEY, JSON.stringify(files));
     }
-  }, [answers, mounted]);
+  }, [files, mounted]);
 
   const handleAnswerChange = useCallback(
     (questionId: string, answer: Answer) => {
       setAnswers((prev) => ({ ...prev, [questionId]: answer }));
+      if (debounceRef.current[questionId]) {
+        clearTimeout(debounceRef.current[questionId]);
+      }
+      debounceRef.current[questionId] = setTimeout(() => {
+        saveAnswer(questionId, answer);
+      }, 300);
     },
     []
   );
@@ -101,6 +108,10 @@ export default function Home() {
           },
         ])
       ),
+      files: files.map((f) => ({
+        name: f.originalName,
+        url: f.url,
+      })),
     };
 
     const blob = new Blob([JSON.stringify(data, null, 2)], {
@@ -114,12 +125,14 @@ export default function Home() {
     URL.revokeObjectURL(url);
 
     showToast("응답이 다운로드되었습니다");
-  }, [answers, showToast]);
+  }, [answers, files, showToast]);
 
   const handleReset = useCallback(() => {
     if (window.confirm("모든 응답을 초기화하시겠습니까?")) {
       setAnswers({});
-      localStorage.removeItem(STORAGE_KEY);
+      setFiles([]);
+      localStorage.removeItem(FILES_KEY);
+      clearAllAnswers();
       showToast("응답이 초기화되었습니다");
     }
   }, [showToast]);
@@ -159,6 +172,42 @@ export default function Home() {
               미팅 브리핑
             </h2>
             <BriefingTab />
+          </>
+        ) : isFiles ? (
+          <>
+            <h2
+              style={{
+                fontSize: "clamp(24px, 3.5vw, 32px)",
+                fontWeight: 800,
+                lineHeight: 1.15,
+                letterSpacing: "-1px",
+                color: "var(--text-primary)",
+                marginBottom: "var(--space-8)",
+              }}
+            >
+              파일 첨부
+            </h2>
+            <div
+              style={{
+                background: "var(--bg-primary)",
+                borderRadius: "var(--radius-xl)",
+                padding: "var(--space-5)",
+                border: "1px solid rgba(0,0,0,0.04)",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "13px",
+                  fontWeight: 400,
+                  lineHeight: 1.7,
+                  color: "var(--text-secondary)",
+                  marginBottom: "var(--space-4)",
+                }}
+              >
+                미팅 관련 자료나 참고 파일을 첨부해주세요.
+              </p>
+              <FileUpload files={files} onFilesChange={setFiles} />
+            </div>
           </>
         ) : (
           <>

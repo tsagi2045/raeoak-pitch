@@ -3,6 +3,7 @@
 import { categories } from "@/lib/questions";
 
 export const BRIEFING_TAB_ID = "_briefing";
+export const FILES_TAB_ID = "_files";
 
 interface CategoryTabsProps {
   activeCategory: string;
@@ -75,6 +76,22 @@ export default function CategoryTabs({
           </button>
         );
       })}
+      {/* Files tab */}
+      <button
+        onClick={() => onCategoryChange(FILES_TAB_ID)}
+        className="shrink-0 flex items-center gap-[var(--space-2)] transition-all duration-150 ease-out active:scale-[0.97]"
+        style={{
+          borderRadius: "var(--radius-pill)",
+          padding: "8px 16px",
+          fontSize: "13px",
+          fontWeight: 600,
+          lineHeight: 1,
+          background: activeCategory === FILES_TAB_ID ? "var(--accent)" : "var(--bg-surface)",
+          color: activeCategory === FILES_TAB_ID ? "#ffffff" : "var(--text-secondary)",
+        }}
+      >
+        파일 첨부
+      </button>
     </div>
   );
 }
