@@ -92,7 +92,7 @@ export const categories: Category[] = [
         ],
         type: "checkbox-text",
         options: [
-          "장시간(13~15h) 우린 정통 육수",
+          "13시간 우린 정통 육수",
           "베트남인 고객 비율이 높음 (정통성 입증)",
           "재료 원칙 — 기준 미달 시 당일 판매 중단",
           "다이닝코드 맛 평점 4.8",
