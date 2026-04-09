@@ -111,6 +111,7 @@ function saveLocal(id: string, value: Answer): void {
 export interface UploadedFile {
   path: string;
   originalName: string;
+  size: number;
   url: string;
 }
 
@@ -128,7 +129,7 @@ export async function uploadFile(file: File): Promise<UploadedFile | null> {
     data: { publicUrl },
   } = supabase.storage.from("attachments").getPublicUrl(safePath);
 
-  return { path: safePath, originalName: file.name, url: publicUrl };
+  return { path: safePath, originalName: file.name, size: file.size, url: publicUrl };
 }
 
 export async function deleteFile(path: string): Promise<void> {
