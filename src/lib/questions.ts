@@ -92,7 +92,7 @@ export const categories: Category[] = [
         ],
         type: "checkbox-text",
         options: [
-          "13시간 우린 정통 육수",
+          "장시간(13~15h) 우린 정통 육수",
           "베트남인 고객 비율이 높음 (정통성 입증)",
           "재료 원칙 — 기준 미달 시 당일 판매 중단",
           "다이닝코드 맛 평점 4.8",
@@ -130,9 +130,13 @@ export const categories: Category[] = [
         question:
           "가맹점주 교육 기간과 매장 오픈까지 걸리는 시간은?",
         type: "radio-text",
-        options: ["교육 1주 이내", "교육 2주", "교육 1개월 이상"],
+        options: [
+          "교육 1주 이내 / 오픈까지 1개월 내",
+          "교육 2주 / 오픈까지 1~2개월",
+          "교육 1개월 이상 / 오픈까지 3개월+",
+        ],
         textPlaceholder:
-          "오픈까지 총 소요 기간과 교육 내용도 알려주시면 좋습니다",
+          "정확한 기간이나 교육 커리큘럼이 있으면 알려주세요",
       },
       {
         id: "B4",
@@ -208,6 +212,16 @@ export const categories: Category[] = [
       },
       {
         id: "D3",
+        question: "소형 매장이나 배달 특화 모델이 있나요?",
+        descriptions: [
+          "있다면 소자본 창업자를 위한 별도 섹션을 만들어 타겟을 넓힐 수 있습니다.",
+        ],
+        type: "radio-text",
+        options: ["있음", "없음", "검토 중"],
+        textPlaceholder: "있다면 최소 평수, 예상 투자금 등을 알려주세요",
+      },
+      {
+        id: "D4",
         question:
           "경쟁사 랜딩페이지에 아래와 같은 섹션들이 있는데, 라이옥도 넣을 수 있을까요?",
         descriptions: [
@@ -235,16 +249,6 @@ export const categories: Category[] = [
             url: "https://www.phomein.com/company/franchisee/step02.do",
           },
         ],
-      },
-      {
-        id: "D4",
-        question: "소형 매장이나 배달 특화 모델이 있나요?",
-        descriptions: [
-          "있다면 소자본 창업자를 위한 별도 섹션을 만들어 타겟을 넓힐 수 있습니다.",
-        ],
-        type: "radio-text",
-        options: ["있음", "없음", "검토 중"],
-        textPlaceholder: "있다면 최소 평수, 예상 투자금 등을 알려주세요",
       },
     ],
   },
