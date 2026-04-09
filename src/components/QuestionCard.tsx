@@ -86,6 +86,46 @@ export default function QuestionCard({
         </div>
       )}
 
+      {/* Reference links */}
+      {question.links && question.links.length > 0 && (
+        <div className="mt-[var(--space-2)] flex flex-wrap gap-[var(--space-2)]">
+          {question.links.map((link, i) => (
+            <a
+              key={i}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 transition-opacity duration-150 hover:opacity-70"
+              style={{
+                fontSize: "12px",
+                fontWeight: 500,
+                color: "var(--accent)",
+                padding: "4px 10px",
+                borderRadius: "var(--radius-pill)",
+                background: "rgba(0,113,227,0.06)",
+              }}
+            >
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                style={{ flexShrink: 0 }}
+              >
+                <path
+                  d="M5 3H3.5A1.5 1.5 0 002 4.5v4A1.5 1.5 0 003.5 10h4A1.5 1.5 0 009 8.5V7M7 2h3v3M6 6l4-4"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              {link.label}
+            </a>
+          ))}
+        </div>
+      )}
+
       {/* Radio options */}
       {question.type === "radio-text" && question.options && (
         <div className="mt-[var(--space-4)] flex flex-wrap gap-[var(--space-2)]">
