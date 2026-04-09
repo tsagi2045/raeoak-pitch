@@ -138,10 +138,16 @@ export default function FileUpload({ files, onFilesChange }: FileUploadProps) {
                 background: "var(--bg-surface)",
               }}
             >
-              <a
-                href={f.url}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={async () => {
+                  const res = await fetch(f.url);
+                  const blob = await res.blob();
+                  const a = document.createElement("a");
+                  a.href = URL.createObjectURL(blob);
+                  a.download = f.originalName;
+                  a.click();
+                  URL.revokeObjectURL(a.href);
+                }}
                 className="flex items-center gap-[var(--space-2)] transition-opacity hover:opacity-70"
                 style={{
                   fontSize: "13px",
@@ -152,7 +158,7 @@ export default function FileUpload({ files, onFilesChange }: FileUploadProps) {
               >
                 <span style={{ flexShrink: 0 }}>📎</span>
                 <span className="truncate">{f.originalName}</span>
-              </a>
+              </button>
               <button
                 onClick={() => handleDelete(f.path)}
                 className="shrink-0 transition-opacity hover:opacity-70"
