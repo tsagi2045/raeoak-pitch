@@ -201,7 +201,7 @@ export default function FileUpload({ files, onFilesChange }: FileUploadProps) {
                     color: "var(--text-tertiary)",
                   }}
                 >
-                  {formatSize(f.size)}
+                  {f.size ? formatSize(f.size) : "—"}
                 </span>
                 <button
                   onClick={() => downloadFile(f.url, f.originalName)}

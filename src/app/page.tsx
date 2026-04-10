@@ -35,9 +35,29 @@ function countAnswered(answers: Answers): number {
 
 const allTabIds = [BRIEFING_TAB_ID, ...categories.map((c) => c.id), "_files"];
 
+function tabIdToHash(id: string): string {
+  if (id === BRIEFING_TAB_ID) return "#briefing";
+  if (id === "_files") return "#files";
+  return `#${id}`;
+}
+
+function hashToTabId(hash: string): string | null {
+  if (!hash) return null;
+  const h = hash.replace("#", "");
+  if (h === "briefing") return BRIEFING_TAB_ID;
+  if (h === "files") return "_files";
+  if (allTabIds.includes(h)) return h;
+  return null;
+}
+
 export default function Home() {
   const [answers, setAnswers] = useState<Answers>({});
-  const [activeCategory, setActiveCategory] = useState(BRIEFING_TAB_ID);
+  const [activeCategory, setActiveCategory] = useState(() => {
+    if (typeof window !== "undefined") {
+      return hashToTabId(window.location.hash) ?? BRIEFING_TAB_ID;
+    }
+    return BRIEFING_TAB_ID;
+  });
   const [toast, setToast] = useState({ visible: false, message: "" });
   const [mounted, setMounted] = useState(false);
   const [files, setFiles] = useState<UploadedFile[]>([]);
@@ -82,6 +102,7 @@ export default function Home() {
 
   const handleCategoryChange = useCallback((id: string) => {
     setActiveCategory(id);
+    window.history.replaceState(null, "", tabIdToHash(id));
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
