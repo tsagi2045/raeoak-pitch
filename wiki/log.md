@@ -1,7 +1,7 @@
 ---
 title: Wiki 변경 로그
 created: 2026-04-08
-updated: 2026-04-09
+updated: 2026-04-13
 ---
 
 # Wiki 변경 로그
@@ -107,3 +107,15 @@ updated: 2026-04-09
   - wiki/concepts/시장-기회.md — 글로벌 시장 성장 기회 추가, 폐업 데이터 보강, 생존율 비교 섹션 추가
   - wiki/index.md — raw-01 설명 갱신, Entities에 호앙비엣 추가
 - **생성**: wiki/entities/호앙비엣.md — 수도권 20개 매장, 현지 공장 직제조, 라이옥 비교표
+
+## 2026-04-13 ingest | raw-09 라이옥 브로슈어 + raw-10 포솔 리플렛
+
+- **원본**: raw/raw-09-laioq-brochure.md (PDF 추출), raw/raw-10-phosoul-leaflet.md (PDF 추출)
+- **생성**:
+  - wiki/sources/raw-09-summary.md — 라이옥 공식 브로슈어 요약 (CI, 비용, 수익률, 메뉴, 팀)
+  - wiki/sources/raw-10-summary.md — 포솔 리플렛 요약 (자매 브랜드, 1인 특화, 참고용)
+- **갱신**:
+  - wiki/entities/라이옥.md — CI, 가맹비용 2개 타입, 수익률, 메뉴 전체 가격표, 팀 구조, 가맹 절차, 인테리어, 포솔 자매 관계 추가
+  - wiki/concepts/가맹-조건.md — 라이옥 실제 비용 데이터 반영 ("미공개"→구체 수치), 포솔 비교, 투명성 전략 업데이트
+  - wiki/concepts/소자본-창업.md — 라이옥 라이트 모델 상세, 브랜드별 비용표에 라이옥/포솔 추가
+  - wiki/index.md — Sources에 raw-09, raw-10 추가, 라이옥 설명 갱신
