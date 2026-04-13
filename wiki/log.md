@@ -119,3 +119,13 @@ updated: 2026-04-13
   - wiki/concepts/가맹-조건.md — 라이옥 실제 비용 데이터 반영 ("미공개"→구체 수치), 포솔 비교, 투명성 전략 업데이트
   - wiki/concepts/소자본-창업.md — 라이옥 라이트 모델 상세, 브랜드별 비용표에 라이옥/포솔 추가
   - wiki/index.md — Sources에 raw-09, raw-10 추가, 라이옥 설명 갱신
+
+## 2026-04-13 ingest | raw-11 브랜딩 커리큘럼
+
+- **원본**: branding-raeoak.md → raw/raw-11-branding-curriculum.md
+- **생성**:
+  - wiki/sources/raw-11-summary.md — 10강 브랜딩 커리큘럼 요약 (프레임워크, 라이옥 적용 포인트)
+  - wiki/concepts/리브랜딩-전략.md — 라이트 모델 리브랜딩 전략, 10단계 체크리스트, 산출물 로드맵
+- **갱신**:
+  - wiki/entities/라이옥.md — 리브랜딩 프로젝트 섹션 추가 (대상: 라이트, 깊이: 리포지셔닝)
+  - wiki/index.md — Sources에 raw-11, Concepts에 리브랜딩-전략 추가
