@@ -4,8 +4,73 @@ import { useState } from "react";
 import Link from "next/link";
 import { strategyTabs } from "@/lib/strategy-content";
 
+function ImageModal({
+  src,
+  alt,
+  onClose,
+}: {
+  src: string;
+  alt: string;
+  onClose: () => void;
+}) {
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 100,
+        background: "rgba(0,0,0,0.85)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "var(--space-5)",
+        cursor: "zoom-out",
+      }}
+    >
+      <img
+        src={src}
+        alt={alt}
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          maxWidth: "100%",
+          maxHeight: "90vh",
+          borderRadius: "var(--radius-lg)",
+          objectFit: "contain",
+          cursor: "default",
+        }}
+      />
+      <button
+        onClick={onClose}
+        style={{
+          position: "absolute",
+          top: "var(--space-5)",
+          right: "var(--space-5)",
+          width: 36,
+          height: 36,
+          borderRadius: "50%",
+          background: "rgba(255,255,255,0.15)",
+          border: "none",
+          color: "#fff",
+          fontSize: "18px",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        ✕
+      </button>
+    </div>
+  );
+}
+
 export default function StrategyPage() {
   const [activeTab, setActiveTab] = useState(strategyTabs[0].id);
+  const [modalImage, setModalImage] = useState<{
+    src: string;
+    alt: string;
+  } | null>(null);
   const currentTab = strategyTabs.find((t) => t.id === activeTab)!;
 
   return (
@@ -16,6 +81,15 @@ export default function StrategyPage() {
         padding: "var(--space-10) var(--space-5) 120px",
       }}
     >
+      {/* Modal */}
+      {modalImage && (
+        <ImageModal
+          src={modalImage.src}
+          alt={modalImage.alt}
+          onClose={() => setModalImage(null)}
+        />
+      )}
+
       {/* Back + Header */}
       <header style={{ marginBottom: "var(--space-8)" }}>
         <Link
@@ -226,6 +300,58 @@ export default function StrategyPage() {
                 {item.material}
               </p>
             </div>
+
+            {/* Reference images */}
+            {item.images && item.images.length > 0 && (
+              <div style={{ marginTop: "var(--space-4)" }}>
+                <div
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: 500,
+                    color: "var(--text-tertiary)",
+                    marginBottom: "var(--space-2)",
+                  }}
+                >
+                  레퍼런스 이미지 (클릭하여 확대)
+                </div>
+                <div className="flex gap-[var(--space-2)]" style={{ overflowX: "auto" }}>
+                  {item.images.map((img, imgIdx) => (
+                    <button
+                      key={imgIdx}
+                      onClick={() => setModalImage(img)}
+                      style={{
+                        flexShrink: 0,
+                        width: 120,
+                        height: 160,
+                        borderRadius: "var(--radius-md)",
+                        overflow: "hidden",
+                        border: "1px solid var(--border-subtle)",
+                        cursor: "zoom-in",
+                        padding: 0,
+                        background: "var(--bg-surface)",
+                        transition: "border-color var(--duration-fast)",
+                      }}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.borderColor = "var(--accent)")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.borderColor = "var(--border-subtle)")
+                      }
+                    >
+                      <img
+                        src={img.src}
+                        alt={img.alt}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>
