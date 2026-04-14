@@ -174,7 +174,7 @@ export default function StrategyPage() {
               </h3>
             </div>
 
-            {/* LP form */}
+            {/* Expression method */}
             <div style={{ marginBottom: "var(--space-3)" }}>
               <div
                 style={{
@@ -184,7 +184,7 @@ export default function StrategyPage() {
                   marginBottom: "var(--space-1)",
                 }}
               >
-                LP에 넣을 수 있는 형태
+                표현 방법
               </div>
               <p
                 style={{
@@ -196,11 +196,11 @@ export default function StrategyPage() {
                   borderRadius: "var(--radius-md)",
                 }}
               >
-                {item.lpForm}
+                {item.expression}
               </p>
             </div>
 
-            {/* Discussion point */}
+            {/* Required material */}
             <div>
               <div
                 style={{
@@ -210,7 +210,7 @@ export default function StrategyPage() {
                   marginBottom: "var(--space-1)",
                 }}
               >
-                대표님과 확인할 것
+                필요한 재료
               </div>
               <p
                 style={{
@@ -223,7 +223,7 @@ export default function StrategyPage() {
                   borderRadius: "var(--radius-md)",
                 }}
               >
-                {item.discuss}
+                {item.material}
               </p>
             </div>
           </div>
@@ -248,7 +248,7 @@ export default function StrategyPage() {
         >
           <strong style={{ color: "var(--text-secondary)" }}>참고: </strong>
           &quot;월 ○○만원 보장&quot; 같은 확정 표현은 가맹사업법 위반입니다.
-          LP에서는 &quot;예상 수익률&quot;로 표현하고, &quot;매장 매출과 여건에
+          랜딩페이지에서는 &quot;예상 수익률&quot;로 표현하고, &quot;매장 매출과 여건에
           따라 달라질 수 있음&quot;을 반드시 병기해야 합니다.
         </p>
       </div>
