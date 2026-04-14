@@ -199,7 +199,7 @@ export default function MainPage() {
             marginBottom: "var(--space-3)",
           }}
         >
-          가맹점 모집 LP
+          가맹점 모집 랜딩페이지
           <br />
           사전 브리핑
         </h1>
