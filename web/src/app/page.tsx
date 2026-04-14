@@ -1,225 +1,331 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import Header from "@/components/Header";
-import QuestionCard from "@/components/QuestionCard";
-import BottomBar from "@/components/BottomBar";
-import Toast from "@/components/Toast";
-import {
-  categories,
-  totalQuestions,
-  type Answers,
-  type Answer,
-} from "@/lib/questions";
+import Link from "next/link";
+import { mainSections } from "@/lib/briefing-main";
+import type { ContentBlock } from "@/lib/briefing-main";
 
-const STORAGE_KEY = "raeoak-qa-answers";
-
-function loadAnswers(): Answers {
-  if (typeof window === "undefined") return {};
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : {};
-  } catch {
-    return {};
-  }
-}
-
-function saveAnswers(answers: Answers) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
-  } catch {
-    // ignore
-  }
-}
-
-function countAnswered(answers: Answers): number {
-  return Object.values(answers).filter((a) => {
-    if (a.radio) return true;
-    if (a.checkboxes && a.checkboxes.length > 0) return true;
-    if (a.text && a.text.trim().length > 0) return true;
-    return false;
-  }).length;
-}
-
-export default function Home() {
-  const [answers, setAnswers] = useState<Answers>({});
-  const [activeCategory, setActiveCategory] = useState(categories[0].id);
-  const [toast, setToast] = useState({ visible: false, message: "" });
-  const [mounted, setMounted] = useState(false);
-  const mainRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setAnswers(loadAnswers());
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (mounted) {
-      saveAnswers(answers);
-    }
-  }, [answers, mounted]);
-
-  const handleAnswerChange = useCallback(
-    (questionId: string, answer: Answer) => {
-      setAnswers((prev) => ({ ...prev, [questionId]: answer }));
-    },
-    []
-  );
-
-  const handleCategoryChange = useCallback((id: string) => {
-    setActiveCategory(id);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
-
-  const showToast = useCallback((message: string) => {
-    setToast({ visible: true, message });
-  }, []);
-
-  const hideToast = useCallback(() => {
-    setToast({ visible: false, message: "" });
-  }, []);
-
-  const handleSubmit = useCallback(() => {
-    const data = {
-      submittedAt: new Date().toISOString(),
-      answers: Object.fromEntries(
-        Object.entries(answers).map(([id, a]) => [
-          id,
-          {
-            ...(a.radio ? { selected: a.radio } : {}),
-            ...(a.checkboxes && a.checkboxes.length > 0
-              ? { checked: a.checkboxes }
-              : {}),
-            ...(a.text && a.text.trim() ? { text: a.text.trim() } : {}),
-          },
-        ])
-      ),
-    };
-
-    const blob = new Blob([JSON.stringify(data, null, 2)], {
-      type: "application/json",
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `라이옥-사전질문지-${new Date().toISOString().slice(0, 10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-
-    showToast("응답이 다운로드되었습니다");
-  }, [answers, showToast]);
-
-  const handleReset = useCallback(() => {
-    if (window.confirm("모든 응답을 초기화하시겠습니까?")) {
-      setAnswers({});
-      localStorage.removeItem(STORAGE_KEY);
-      showToast("응답이 초기화되었습니다");
-    }
-  }, [showToast]);
-
-  const activeCat = categories.find((c) => c.id === activeCategory)!;
-  const answered = countAnswered(answers);
-  const isComplete = answered === totalQuestions;
-
-  return (
-    <>
-      <Header
-        activeCategory={activeCategory}
-        onCategoryChange={handleCategoryChange}
-        answers={answers}
-      />
-
-      <main
-        ref={mainRef}
-        className="mx-auto w-full max-w-[980px] px-[var(--space-6)] pt-[var(--space-8)] pb-[100px]"
+function RenderBlock({ block }: { block: ContentBlock }) {
+  if (block.type === "text") {
+    return (
+      <p
+        style={{
+          fontSize: "15px",
+          lineHeight: 1.8,
+          color: "var(--text-secondary)",
+          fontWeight: 400,
+        }}
       >
-        {/* Category Title */}
-        <h2
+        {block.value}
+      </p>
+    );
+  }
+
+  if (block.type === "highlight") {
+    return (
+      <div
+        style={{
+          background: "rgba(0,113,227,0.04)",
+          borderLeft: "3px solid var(--accent)",
+          borderRadius: "0 var(--radius-md) var(--radius-md) 0",
+          padding: "var(--space-4) var(--space-5)",
+        }}
+      >
+        <p
           style={{
-            fontSize: "clamp(24px, 3.5vw, 32px)",
-            fontWeight: 800,
-            lineHeight: 1.15,
-            letterSpacing: "-1px",
+            fontSize: "14px",
+            lineHeight: 1.7,
             color: "var(--text-primary)",
-            marginBottom: "var(--space-8)",
+            fontWeight: 500,
           }}
         >
-          {activeCat.label}. {activeCat.title}
-        </h2>
+          {block.value}
+        </p>
+      </div>
+    );
+  }
 
-        {/* Question Cards */}
-        <div className="flex flex-col gap-[var(--space-3)]">
-          {activeCat.questions.map((q) => (
-            <QuestionCard
-              key={q.id}
-              question={q}
-              answer={answers[q.id] ?? {}}
-              onChange={(a) => handleAnswerChange(q.id, a)}
-            />
-          ))}
+  if (block.type === "table") {
+    return (
+      <div style={{ overflowX: "auto" }}>
+        <table
+          style={{
+            width: "100%",
+            borderCollapse: "collapse",
+            fontSize: "13px",
+            lineHeight: 1.6,
+          }}
+        >
+          <thead>
+            <tr>
+              {block.headers.map((h, i) => (
+                <th
+                  key={i}
+                  style={{
+                    textAlign: "left",
+                    padding: "var(--space-3) var(--space-4)",
+                    borderBottom: "1px solid var(--border-subtle)",
+                    color: "var(--text-tertiary)",
+                    fontWeight: 500,
+                    fontSize: "12px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {block.rows.map((row, i) => (
+              <tr key={i}>
+                {row.map((cell, j) => (
+                  <td
+                    key={j}
+                    style={{
+                      padding: "var(--space-3) var(--space-4)",
+                      borderBottom: "1px solid var(--border-subtle)",
+                      color: j === 0 ? "var(--text-tertiary)" : "var(--text-primary)",
+                      fontWeight: j === 0 ? 500 : 400,
+                      fontSize: j === 0 ? "12px" : "13px",
+                    }}
+                  >
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+  if (block.type === "comparison") {
+    return (
+      <div className="flex flex-col gap-[var(--space-2)]">
+        <div
+          className="grid grid-cols-2 gap-[var(--space-3)]"
+          style={{ marginBottom: "var(--space-2)" }}
+        >
+          <div
+            style={{
+              fontSize: "11px",
+              fontWeight: 600,
+              color: "var(--text-tertiary)",
+              textTransform: "uppercase",
+              letterSpacing: "0.5px",
+              padding: "0 var(--space-3)",
+            }}
+          >
+            {block.left}
+          </div>
+          <div
+            style={{
+              fontSize: "11px",
+              fontWeight: 600,
+              color: "var(--state-error)",
+              textTransform: "uppercase",
+              letterSpacing: "0.5px",
+              padding: "0 var(--space-3)",
+            }}
+          >
+            {block.right}
+          </div>
         </div>
-
-        {/* Category Navigation */}
-        <div className="mt-[var(--space-10)] flex justify-between">
-          {activeCategory !== categories[0].id ? (
-            <button
-              onClick={() => {
-                const idx = categories.findIndex(
-                  (c) => c.id === activeCategory
-                );
-                if (idx > 0) handleCategoryChange(categories[idx - 1].id);
-              }}
-              className="transition-opacity duration-150 hover:opacity-80 active:scale-[0.97]"
+        {block.pairs.map(([left, right], i) => (
+          <div key={i} className="grid grid-cols-2 gap-[var(--space-3)]">
+            <div
               style={{
-                fontSize: "14px",
-                fontWeight: 600,
-                padding: "10px 24px",
-                borderRadius: "var(--radius-pill)",
-                background: "var(--bg-surface)",
+                fontSize: "13px",
+                lineHeight: 1.6,
                 color: "var(--text-secondary)",
+                padding: "var(--space-2) var(--space-3)",
+                background: "var(--bg-surface)",
+                borderRadius: "var(--radius-sm)",
               }}
             >
-              ← 이전
-            </button>
-          ) : (
-            <div />
-          )}
-          {activeCategory !== categories[categories.length - 1].id ? (
-            <button
-              onClick={() => {
-                const idx = categories.findIndex(
-                  (c) => c.id === activeCategory
-                );
-                if (idx < categories.length - 1)
-                  handleCategoryChange(categories[idx + 1].id);
-              }}
-              className="transition-opacity duration-150 hover:opacity-80 active:scale-[0.97]"
+              {left}
+            </div>
+            <div
               style={{
-                fontSize: "14px",
-                fontWeight: 600,
-                padding: "10px 24px",
-                borderRadius: "var(--radius-pill)",
-                background: "var(--accent)",
-                color: "#ffffff",
+                fontSize: "13px",
+                lineHeight: 1.6,
+                color: "var(--text-primary)",
+                fontWeight: 500,
+                padding: "var(--space-2) var(--space-3)",
+                background: "rgba(255,59,48,0.04)",
+                borderRadius: "var(--radius-sm)",
               }}
             >
-              다음 →
-            </button>
-          ) : (
-            <div />
-          )}
-        </div>
-      </main>
+              {right}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
-      <BottomBar
-        onSubmit={handleSubmit}
-        onReset={handleReset}
-        isComplete={isComplete}
-        answeredCount={answered}
-        totalCount={totalQuestions}
-      />
+  return null;
+}
 
-      <Toast message={toast.message} visible={toast.visible} onHide={hideToast} />
-    </>
+export default function MainPage() {
+  return (
+    <div
+      style={{
+        maxWidth: 640,
+        margin: "0 auto",
+        padding: "var(--space-10) var(--space-5) 120px",
+      }}
+    >
+      <header style={{ marginBottom: "var(--space-10)" }}>
+        <p
+          style={{
+            fontSize: "12px",
+            fontWeight: 500,
+            color: "var(--accent)",
+            letterSpacing: "0.5px",
+            marginBottom: "var(--space-2)",
+          }}
+        >
+          RAEOAK FRANCHISE
+        </p>
+        <h1
+          style={{
+            fontSize: "clamp(24px, 4vw, 32px)",
+            fontWeight: 700,
+            lineHeight: 1.3,
+            letterSpacing: "-0.5px",
+            color: "var(--text-primary)",
+            marginBottom: "var(--space-3)",
+          }}
+        >
+          가맹점 모집 LP
+          <br />
+          사전 브리핑
+        </h1>
+        <p
+          style={{
+            fontSize: "15px",
+            lineHeight: 1.6,
+            color: "var(--text-tertiary)",
+          }}
+        >
+          랜딩페이지를 만들기 전에 정리해야 할 것들
+        </p>
+      </header>
+
+      <div className="flex flex-col gap-[var(--space-8)]">
+        {mainSections.map((section, idx) => (
+          <section key={section.id}>
+            <div
+              style={{
+                fontSize: "11px",
+                fontWeight: 600,
+                color: "var(--text-tertiary)",
+                marginBottom: "var(--space-2)",
+              }}
+            >
+              {String(idx + 1).padStart(2, "0")}
+            </div>
+
+            <div
+              style={{
+                background: "var(--bg-primary)",
+                borderRadius: "var(--radius-xl)",
+                padding: "var(--space-6)",
+                border: "1px solid rgba(0,0,0,0.04)",
+              }}
+            >
+              <h2
+                style={{
+                  fontSize: "clamp(18px, 3vw, 22px)",
+                  fontWeight: 700,
+                  lineHeight: 1.3,
+                  letterSpacing: "-0.3px",
+                  color: "var(--text-primary)",
+                  marginBottom: "var(--space-1)",
+                }}
+              >
+                {section.title}
+              </h2>
+
+              {section.subtitle && (
+                <p
+                  style={{
+                    fontSize: "13px",
+                    color: "var(--text-tertiary)",
+                    marginBottom: "var(--space-5)",
+                  }}
+                >
+                  {section.subtitle}
+                </p>
+              )}
+
+              <div className="flex flex-col gap-[var(--space-4)]">
+                {section.content.map((block, i) => (
+                  <RenderBlock key={i} block={block} />
+                ))}
+              </div>
+            </div>
+          </section>
+        ))}
+      </div>
+
+      <div style={{ marginTop: "var(--space-10)", textAlign: "center" }}>
+        <Link
+          href="/strategy"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "var(--space-2)",
+            padding: "var(--space-4) var(--space-8)",
+            background: "var(--accent)",
+            color: "#fff",
+            fontSize: "15px",
+            fontWeight: 600,
+            borderRadius: "var(--radius-pill)",
+            textDecoration: "none",
+            transition: "background var(--duration-fast)",
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.background = "var(--accent-hover)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.background = "var(--accent)")
+          }
+        >
+          어필 전략 보기
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path
+              d="M6 4l4 4-4 4"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </Link>
+      </div>
+
+      <div style={{ marginTop: "var(--space-6)", textAlign: "center" }}>
+        <Link
+          href="/questions"
+          style={{
+            fontSize: "13px",
+            color: "var(--text-tertiary)",
+            textDecoration: "none",
+            transition: "color var(--duration-fast)",
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.color = "var(--accent)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.color = "var(--text-tertiary)")
+          }
+        >
+          사전 질문지 바로가기 →
+        </Link>
+      </div>
+    </div>
   );
 }
