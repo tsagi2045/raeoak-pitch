@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "라이옥 가맹점 모집 랜딩페이지 — 사전 질문지",
-  description: "라이옥(RAEOAK) 가맹점 모집 랜딩페이지 제작을 위한 사전 미팅 질문지",
+  title: "라이옥 가맹점 모집 — 사전 브리핑",
+  description: "라이옥(RAEOAK) 가맹점 모집 LP 제작을 위한 사전 브리핑 및 어필 전략",
 };
 
 export default function RootLayout({
