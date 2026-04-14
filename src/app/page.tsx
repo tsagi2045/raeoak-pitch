@@ -309,6 +309,26 @@ export default function MainPage() {
 
       <div style={{ marginTop: "var(--space-6)", textAlign: "center" }}>
         <Link
+          href="/lp-plan"
+          style={{
+            fontSize: "13px",
+            color: "var(--text-tertiary)",
+            textDecoration: "none",
+            transition: "color var(--duration-fast)",
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.color = "var(--accent)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.color = "var(--text-tertiary)")
+          }
+        >
+          LP 기획안 · 자료 현황 →
+        </Link>
+      </div>
+
+      <div style={{ marginTop: "var(--space-3)", textAlign: "center" }}>
+        <Link
           href="/questions"
           style={{
             fontSize: "13px",

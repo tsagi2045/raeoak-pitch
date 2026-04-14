@@ -26,8 +26,8 @@ export const strategyTabs: StrategyTab[] = [
         id: "A1",
         point: "매출 성공 사례",
         expression:
-          "\"3천만원에서 1억 3천, 4배 성장\" 같은 실제 매장 사례. 숫자가 곧 설득력",
-        material: "기존 매장의 매출 성장 사례 데이터",
+          "본점 15평 월 매출 1억 (배달 없이). 미아점 투자금 5천만 미만 → 월 3천만 이상. 숫자가 곧 설득력",
+        material: "본점·미아점 실제 매출 데이터 (미팅 확인)",
         images: [
           { src: "/benchmarks/ari-001-revenue-growth.jpeg", alt: "아리계곡 매출 4배 성장 사례" },
         ],
@@ -36,8 +36,8 @@ export const strategyTabs: StrategyTab[] = [
         id: "A2",
         point: "가맹점별 매출·순수익 공개",
         expression:
-          "매장별 실제 정산 데이터를 공개. \"전가맹점 월평균 순수익 2,800만원\" 같은 구체 수치",
-        material: "직영점/미아점 매출·순수익 추이 데이터",
+          "미아점 실제 정산 데이터 공개. 3단계 매출 시나리오(3천/5천/8천만)로 현실적 수익 시뮬레이션",
+        material: "미아점 매출 추이 + 3단계 시나리오별 마진/영업이익금 (본부 요청 중)",
         images: [
           { src: "/benchmarks/ari-005-store-revenue.jpeg", alt: "아리계곡 가맹점별 매출·순수익" },
           { src: "/benchmarks/crispy-005-revenue-sim.jpeg", alt: "슈퍼크리스피 매출 구간별 수익 시뮬레이션" },
@@ -47,8 +47,8 @@ export const strategyTabs: StrategyTab[] = [
         id: "A3",
         point: "업종 대비 마진율 비교",
         expression:
-          "\"한식 38~48% 원가 vs 라이옥 ○%\" — 같은 업종과 비교하면 차이가 선명",
-        material: "브로슈어 수치 재확인 또는 실제 매장 월 정산",
+          "업계 평균 원가율 40% vs 라이옥 30% — 10%p 차이가 순이익을 만든다",
+        material: "원가율 30% 미팅 확인 (브로슈어 38%보다 실제 더 낮음)",
         images: [
           { src: "/benchmarks/ari-012-margin-compare.jpeg", alt: "아리계곡 업종별 원가율 비교" },
           { src: "/benchmarks/ari-013-profit-table.jpeg", alt: "아리계곡 순수익률 비교표" },
@@ -58,8 +58,8 @@ export const strategyTabs: StrategyTab[] = [
         id: "A4",
         point: "비용 구조 투명 공개",
         expression:
-          "가맹금 / 교육비 / 인테리어 / 설비를 항목별로 분해한 차트. 총액이 아니라 항목을 보여줘야 \"숨기는 게 없구나\"",
-        material: "라이트 모델 확정 비용표",
+          "가맹비 500만(1천만에서 할인) + 보증금 300만 면제 + 오픈마케팅 500만 지원. 총 1,300만원 혜택을 항목별로 투명 공개",
+        material: "확정 비용표 — 가맹비 할인, 보증금 면제, 오픈마케팅 지원 (미팅 확인)",
         images: [
           { src: "/benchmarks/ari-017-cost-detail.jpeg", alt: "아리계곡 평수별 창업비용 상세" },
           { src: "/benchmarks/crispy-007-cost-table.jpeg", alt: "슈퍼크리스피 평수별 비용표" },
@@ -69,8 +69,8 @@ export const strategyTabs: StrategyTab[] = [
         id: "A5",
         point: "배달 의존도 낮은 구조",
         expression:
-          "\"포장/홀 중심 = 배달앱 수수료 부담 적음\" — 배달 플랫폼에 끌려다니지 않는 구조",
-        material: "매장별 홀/포장/배달 비중 데이터",
+          "본점 15평 월 1억을 배달 없이 달성. 홀+포장 중심 구조 — 배달앱 수수료에 끌려다니지 않는다",
+        material: "본점 배달 제외 매출 데이터 (미팅 확인)",
         images: [
           { src: "/benchmarks/crispy-008-no-delivery.jpeg", alt: "슈퍼크리스피 배달앱 탈피 전략" },
         ],
@@ -105,8 +105,8 @@ export const strategyTabs: StrategyTab[] = [
         id: "B1",
         point: "원팩 시스템 — 첫날부터 운영 가능",
         expression:
-          "\"규격화된 식재료 + 15시간 육수 본사 제조 → 매장은 데우고 토핑\" — 요리 경험 불필요",
-        material: "조리 과정 3단계별 사진 또는 영상",
+          "육수 15시간 이상 본사 제조 → 매장은 데우고 토핑. 소스도 공장 제조. 조리 10분 내 완성",
+        material: "조리 프로세스 (미팅 확인: 육수팩 → 데움 → 면 삶기 → 토핑)",
         images: [
           { src: "/benchmarks/ari-014-cook-system.jpeg", alt: "아리계곡 원팩 시스템" },
         ],
@@ -115,8 +115,8 @@ export const strategyTabs: StrategyTab[] = [
         id: "B2",
         point: "교육이 다 잡아준다",
         expression:
-          "\"○주 교육 + 오픈 후 밀착\" 타임라인. 교육 현장 사진과 함께 \"처음이라도 괜찮습니다\"",
-        material: "교육 커리큘럼, 교육장 사진",
+          "현장 교육 + 오픈 전 3일 + 오픈 후 3일 밀착 지원. 요리 초보도 첫날부터 운영 가능",
+        material: "교육 커리큘럼 상세 (미팅 확인: 현장교육 + 오픈 전후 밀착)",
       },
       {
         id: "B3",
@@ -133,15 +133,15 @@ export const strategyTabs: StrategyTab[] = [
         id: "B4",
         point: "SV가 옆에 있다",
         expression:
-          "\"오픈 후 ○주 상주, 이후 월 ○회 방문\" — 혼자 내버려두지 않는다는 안심",
-        material: "SV 방문 빈도·내용 구체 수치",
+          "초기 3개월 SV 20회 이상 방문 — 직원처럼 상주하며 운영 지원. 혼자 내버려두지 않는다",
+        material: "SV 방문 스케줄 (미팅 확인: 초기 3개월 월 1-2회, 20회+)",
       },
       {
         id: "B5",
         point: "물류 걱정 없다",
         expression:
-          "\"삼성 웰스토리 전국 물류, 주 6일 배송\" — 식자재 수급은 본사가 해결",
-        material: "배송 스케줄, 긴급 발주 가능 여부",
+          "자체 PB공장(육수·소스) + 삼성 웰스토리 전국 물류. 식자재 품질과 수급 모두 본사 책임",
+        material: "PB공장 + 삼성웰스토리 물류 계약 (미팅 확인)",
         images: [
           { src: "/benchmarks/crispy-006-logistics.jpeg", alt: "슈퍼크리스피 본사 물류 시스템" },
         ],
@@ -150,15 +150,15 @@ export const strategyTabs: StrategyTab[] = [
         id: "B6",
         point: "메뉴가 단순하다",
         expression:
-          "\"핵심 ○개 메뉴 집중. 복잡하지 않습니다\" — 메뉴 수가 적을수록 운영이 쉽고 품질이 일정",
-        material: "라이트 확정 메뉴 리스트",
+          "라이트 메뉴: 메인 3개 + 사이드 3개. 총 6개만 집중 — 복잡하지 않습니다",
+        material: "라이트 확정 메뉴 리스트 (미팅 확인: 메인3 + 사이드3)",
       },
       {
         id: "B7",
         point: "본사 주도 마케팅",
         expression:
-          "\"SNS·플레이스·인스타 마케팅을 본사가 해줌\" — 점주는 매장 운영에만 집중",
-        material: "본사 마케팅 지원 항목, SNS 운영 실적",
+          "서울 상륙 첫 가맹 — 본사가 광고 전면 지원. 오픈마케팅 500만원(반값 행사 식재료) 포함",
+        material: "오픈마케팅 500만 지원 (미팅 확인) + 서울 첫 가맹 마케팅 전략",
         images: [
           { src: "/benchmarks/ari-015-sns-marketing.jpeg", alt: "아리계곡 본사 SNS 마케팅 1,000만 뷰" },
         ],
@@ -197,8 +197,8 @@ export const strategyTabs: StrategyTab[] = [
         id: "C4",
         point: "미디어 검증",
         expression:
-          "유튜브·언론·블루리본 등 미디어 노출 실적. \"남이 먼저 인정한 브랜드\"",
-        material: "미디어 노출 리스트 (이홍렬TV, 블루리본 등)",
+          "이홍렬TV 유튜브 방문 + 와디즈 2회 진행 + 아세안 어워드 + 레드리본(코카콜라). 10년간 쌓인 검증",
+        material: "이홍렬 유튜브 영상 링크, 와디즈 캠페인 2회, 아세안 어워드 (미팅 확인)",
         images: [
           { src: "/benchmarks/ari-006-brand-trust.jpeg", alt: "아리계곡 1등 브랜드 신뢰" },
           { src: "/benchmarks/crispy-002-youtube.jpeg", alt: "슈퍼크리스피 유튜브·언론 노출" },
@@ -208,15 +208,15 @@ export const strategyTabs: StrategyTab[] = [
         id: "C5",
         point: "점주가 직접 말한다",
         expression:
-          "기존 점주 인터뷰 영상 또는 텍스트 후기. 본사가 아니라 점주의 입으로 말해야 신뢰",
-        material: "인터뷰 가능한 점주 섭외",
+          "부산 전 매장이 고객에서 점주로 전환. 먹어본 사람이 투자한 증거 — 본사 말이 아니라 고객의 선택",
+        material: "고객→점주 전환 사례 (미팅 확인: 부산 전 매장) + 점주 인터뷰 영상 (1월 촬영분)",
       },
       {
         id: "C6",
         point: "4계절 매출 안정",
         expression:
-          "\"계절 변동 없이 연간 고매출 유지\" — 계절성 불안을 그래프로 선제 해소",
-        material: "계절별 매출 데이터, 여름 메뉴 리스트",
+          "사계절 매출 큰 변동 없음. 여름엔 비빔쌀국수·반미로 보완. 탕후루처럼 반짝하고 사라지지 않는다",
+        material: "4계절 매출 안정성 (미팅 확인) + 계절 메뉴 운영",
         images: [
           { src: "/benchmarks/ari-010-seasonal.jpeg", alt: "아리계곡 4계절 매출 유지" },
         ],
@@ -232,8 +232,8 @@ export const strategyTabs: StrategyTab[] = [
         id: "C8",
         point: "넓은 고객층",
         expression:
-          "\"20~50대 전 연령이 방문\" — 트렌드에 의존하지 않는 안정적 수요 기반",
-        material: "고객 연령대 분포 데이터",
+          "초등학생부터 어르신까지 전 연령이 단골. 트렌드에 의존하지 않는 생활식",
+        material: "전 연령층 고객 데이터 (미팅 확인: 초등생~어르신)",
         images: [
           { src: "/benchmarks/ari-011-customer-age.jpeg", alt: "아리계곡 20~50대 고객 분포" },
         ],
