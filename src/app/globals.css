@@ -59,25 +59,8 @@
   --color-border-focus: var(--border-focus);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-primary: #1c1c1e;
-    --bg-surface: #2c2c2e;
-    --text-primary: #f5f5f7;
-    --text-secondary: rgba(255, 255, 255, 0.72);
-    --text-tertiary: rgba(255, 255, 255, 0.48);
-    --accent: #0a84ff;
-    --accent-hover: #409cff;
-    --state-success: #30d158;
-    --state-error: #ff453a;
-    --border-subtle: rgba(255, 255, 255, 0.12);
-    --border-focus: rgba(10, 132, 255, 0.5);
-    --shadow-card: 0 1px 4px rgba(0, 0, 0, 0.3);
-    --shadow-toast: 0 4px 12px rgba(0, 0, 0, 0.4);
-  }
-}
-
 body {
+  color-scheme: light;
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: "Pretendard Variable", Pretendard, -apple-system,

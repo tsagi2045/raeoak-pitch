@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import {
   hqRequestItems,
   categoryLabels,
@@ -17,9 +18,51 @@ import {
   type UploadedFile,
 } from "@/lib/hq-storage";
 
-const MAX_FILE_SIZE_MB = 7;
-const MAX_FILES_PER_ITEM = 5;
+const MAX_FILE_SIZE_MB = 50;
+const MAX_FILES_PER_ITEM = 10;
 
+/* ── Image Modal ── */
+function ImageModal({
+  src,
+  alt,
+  onClose,
+}: {
+  src: string;
+  alt: string;
+  onClose: () => void;
+}) {
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 100,
+        background: "rgba(0,0,0,0.8)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 20,
+        cursor: "zoom-out",
+      }}
+    >
+      <img
+        src={src}
+        alt={alt}
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          maxWidth: "100%",
+          maxHeight: "90vh",
+          borderRadius: 12,
+          objectFit: "contain",
+          cursor: "default",
+        }}
+      />
+    </div>
+  );
+}
+
+/* ── Status Badge ── */
 function StatusBadge({ answered }: { answered: boolean }) {
   return (
     <span
@@ -28,10 +71,8 @@ function StatusBadge({ answered }: { answered: boolean }) {
         fontWeight: 600,
         padding: "3px 10px",
         borderRadius: "var(--radius-pill)",
-        background: answered
-          ? "var(--state-success)"
-          : "var(--text-tertiary)",
-        color: "#fff",
+        background: answered ? "#34c759" : "rgba(0,0,0,0.08)",
+        color: answered ? "#fff" : "rgba(0,0,0,0.36)",
         letterSpacing: "0.2px",
       }}
     >
@@ -40,6 +81,7 @@ function StatusBadge({ answered }: { answered: boolean }) {
   );
 }
 
+/* ── File Item ── */
 function FileItem({
   file,
   onDelete,
@@ -57,12 +99,12 @@ function FileItem({
       style={{
         display: "flex",
         alignItems: "center",
-        gap: "var(--space-2)",
-        padding: "var(--space-2) var(--space-3)",
-        background: "var(--bg-surface)",
-        borderRadius: "var(--radius-sm)",
-        border: "1px solid var(--border-subtle)",
-        fontSize: "13px",
+        gap: 8,
+        padding: "8px 12px",
+        background: "#f5f5f7",
+        borderRadius: 8,
+        border: "1px solid rgba(0,0,0,0.06)",
+        fontSize: 13,
       }}
     >
       <span style={{ flexShrink: 0 }}>📎</span>
@@ -71,7 +113,7 @@ function FileItem({
         target="_blank"
         rel="noopener noreferrer"
         style={{
-          color: "var(--accent)",
+          color: "#0071e3",
           textDecoration: "none",
           flex: 1,
           minWidth: 0,
@@ -82,13 +124,7 @@ function FileItem({
       >
         {file.originalName}
       </a>
-      <span
-        style={{
-          color: "var(--text-tertiary)",
-          fontSize: "11px",
-          flexShrink: 0,
-        }}
-      >
+      <span style={{ color: "rgba(0,0,0,0.32)", fontSize: 11, flexShrink: 0 }}>
         {sizeStr}
       </span>
       <button
@@ -96,9 +132,9 @@ function FileItem({
         style={{
           background: "none",
           border: "none",
-          color: "var(--text-tertiary)",
+          color: "rgba(0,0,0,0.32)",
           cursor: "pointer",
-          fontSize: "16px",
+          fontSize: 16,
           padding: "0 2px",
           lineHeight: 1,
           flexShrink: 0,
@@ -110,6 +146,7 @@ function FileItem({
   );
 }
 
+/* ── Request Card ── */
 function RequestCard({
   item,
   index,
@@ -117,6 +154,7 @@ function RequestCard({
   onTextChange,
   onFileUpload,
   onFileDelete,
+  onImageClick,
 }: {
   item: HqRequestItem;
   index: number;
@@ -124,6 +162,7 @@ function RequestCard({
   onTextChange: (id: string, text: string) => void;
   onFileUpload: (id: string, file: File) => void;
   onFileDelete: (id: string, filePath: string) => void;
+  onImageClick: (src: string, alt: string) => void;
 }) {
   const hasText = !!(answer?.text && answer.text.trim());
   const hasFiles = !!(answer?.files && answer.files.length > 0);
@@ -155,11 +194,11 @@ function RequestCard({
   return (
     <div
       style={{
-        background: "var(--bg-primary)",
-        borderRadius: "var(--radius-xl)",
-        padding: "var(--space-6)",
-        border: "1px solid var(--border-subtle)",
-        boxShadow: "var(--shadow-card)",
+        background: "#fff",
+        borderRadius: 16,
+        padding: 24,
+        border: "1px solid rgba(0,0,0,0.08)",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
       }}
     >
       {/* Header */}
@@ -168,16 +207,16 @@ function RequestCard({
           display: "flex",
           alignItems: "flex-start",
           justifyContent: "space-between",
-          gap: "var(--space-3)",
-          marginBottom: "var(--space-3)",
+          gap: 12,
+          marginBottom: 12,
         }}
       >
         <div style={{ flex: 1 }}>
           <span
             style={{
-              fontSize: "11px",
+              fontSize: 11,
               fontWeight: 600,
-              color: "var(--text-tertiary)",
+              color: "rgba(0,0,0,0.32)",
               marginBottom: 4,
               display: "block",
             }}
@@ -186,10 +225,10 @@ function RequestCard({
           </span>
           <h3
             style={{
-              fontSize: "15px",
+              fontSize: 15,
               fontWeight: 600,
               lineHeight: 1.6,
-              color: "var(--text-primary)",
+              color: "#1d1d1f",
             }}
           >
             {item.question}
@@ -203,10 +242,10 @@ function RequestCard({
       {/* Description */}
       <p
         style={{
-          fontSize: "13px",
+          fontSize: 13,
           lineHeight: 1.7,
-          color: "var(--text-secondary)",
-          marginBottom: item.links ? "var(--space-2)" : "var(--space-4)",
+          color: "rgba(0,0,0,0.56)",
+          marginBottom: item.links || item.images ? 8 : 16,
         }}
       >
         {item.description}
@@ -214,7 +253,7 @@ function RequestCard({
 
       {/* Links */}
       {item.links && (
-        <div style={{ marginBottom: "var(--space-4)" }}>
+        <div style={{ marginBottom: 16 }}>
           {item.links.map((link, i) => (
             <a
               key={i}
@@ -222,23 +261,17 @@ function RequestCard({
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                fontSize: "13px",
-                color: "var(--accent)",
+                fontSize: 13,
+                color: "#0071e3",
                 textDecoration: "none",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 4,
-                padding: "var(--space-1) 0",
+                padding: "4px 0",
               }}
             >
               {link.label}
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                style={{ opacity: 0.6 }}
-              >
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
                 <path
                   d="M4.5 2.5h5m0 0v5m0-5L3 9"
                   stroke="currentColor"
@@ -252,6 +285,43 @@ function RequestCard({
         </div>
       )}
 
+      {/* Reference Images */}
+      {item.images && item.images.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            gap: 8,
+            marginBottom: 16,
+            flexWrap: "wrap",
+          }}
+        >
+          {item.images.map((img, i) => (
+            <div
+              key={i}
+              onClick={() => onImageClick(img.src, img.alt)}
+              style={{
+                cursor: "zoom-in",
+                borderRadius: 10,
+                overflow: "hidden",
+                border: "1px solid rgba(0,0,0,0.08)",
+                maxWidth: item.images!.length === 1 ? "100%" : "48%",
+                flex: item.images!.length === 1 ? "1" : undefined,
+              }}
+            >
+              <img
+                src={img.src}
+                alt={img.alt}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  display: "block",
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Text Input */}
       {(item.answerType === "text" || item.answerType === "both") && (
         <textarea
@@ -261,41 +331,33 @@ function RequestCard({
           rows={3}
           style={{
             width: "100%",
-            padding: "var(--space-3) var(--space-4)",
-            borderRadius: "var(--radius-md)",
-            border: "1px solid var(--border-subtle)",
-            background: "var(--bg-surface)",
-            fontSize: "14px",
+            padding: "12px 16px",
+            borderRadius: 8,
+            border: "1px solid rgba(0,0,0,0.12)",
+            background: "#f5f5f7",
+            fontSize: 14,
             lineHeight: 1.6,
-            color: "var(--text-primary)",
+            color: "#1d1d1f",
             resize: "vertical",
             fontFamily: "inherit",
             outline: "none",
             boxSizing: "border-box",
-            transition: "border-color var(--duration-fast)",
+            transition: "border-color 150ms",
           }}
-          onFocus={(e) =>
-            (e.currentTarget.style.borderColor = "var(--accent)")
-          }
+          onFocus={(e) => (e.currentTarget.style.borderColor = "#0071e3")}
           onBlur={(e) =>
-            (e.currentTarget.style.borderColor = "var(--border-subtle)")
+            (e.currentTarget.style.borderColor = "rgba(0,0,0,0.12)")
           }
         />
       )}
 
       {/* File Upload */}
       {(item.answerType === "file" || item.answerType === "both") && (
-        <div
-          style={{
-            marginTop:
-              item.answerType === "both" ? "var(--space-3)" : undefined,
-          }}
-        >
-          {/* Uploaded files */}
+        <div style={{ marginTop: item.answerType === "both" ? 12 : 0 }}>
           {hasFiles && (
             <div
-              className="flex flex-col gap-[var(--space-2)]"
-              style={{ marginBottom: "var(--space-3)" }}
+              className="flex flex-col gap-[8px]"
+              style={{ marginBottom: 12 }}
             >
               {answer!.files!.map((f) => (
                 <FileItem
@@ -307,53 +369,43 @@ function RequestCard({
             </div>
           )}
 
-          {/* Drop zone */}
           {canUpload && (
             <div
               onDrop={(e) => {
                 e.preventDefault();
+                e.currentTarget.style.borderColor = "rgba(0,0,0,0.12)";
+                e.currentTarget.style.background = "#f5f5f7";
                 const file = e.dataTransfer.files[0];
                 if (file) handleFileSelect(file);
               }}
               onDragOver={(e) => {
                 e.preventDefault();
-                e.currentTarget.style.borderColor = "var(--accent)";
-                e.currentTarget.style.background =
-                  "rgba(0,113,227,0.04)";
+                e.currentTarget.style.borderColor = "#0071e3";
+                e.currentTarget.style.background = "rgba(0,113,227,0.03)";
               }}
               onDragLeave={(e) => {
-                e.currentTarget.style.borderColor = "var(--border-subtle)";
-                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.borderColor = "rgba(0,0,0,0.12)";
+                e.currentTarget.style.background = "#f5f5f7";
               }}
               onClick={() => fileInputRef.current?.click()}
               style={{
-                border: "2px dashed var(--border-subtle)",
-                borderRadius: "var(--radius-md)",
-                padding: "var(--space-5) var(--space-4)",
+                border: "2px dashed rgba(0,0,0,0.12)",
+                borderRadius: 10,
+                padding: "20px 16px",
                 textAlign: "center",
                 cursor: "pointer",
-                transition:
-                  "border-color var(--duration-fast), background var(--duration-fast)",
+                background: "#f5f5f7",
+                transition: "border-color 150ms, background 150ms",
               }}
             >
               <div
-                style={{
-                  fontSize: "13px",
-                  fontWeight: 500,
-                  color: "var(--text-secondary)",
-                  marginBottom: 4,
-                }}
+                style={{ fontSize: 13, fontWeight: 500, color: "#1d1d1f", marginBottom: 4 }}
               >
                 {uploading
                   ? "업로드 중..."
-                  : "파일을 드래그하거나 클릭해서 업로드해 주세요"}
+                  : "파일을 드래그하거나 클릭해서 업로드"}
               </div>
-              <div
-                style={{
-                  fontSize: "11px",
-                  color: "var(--text-tertiary)",
-                }}
-              >
+              <div style={{ fontSize: 11, color: "rgba(0,0,0,0.36)" }}>
                 최대 {MAX_FILE_SIZE_MB}MB · {MAX_FILES_PER_ITEM}개까지 ·
                 이미지, PDF, 엑셀, 영상 등
               </div>
@@ -371,26 +423,18 @@ function RequestCard({
             }}
           />
 
-          {/* Error */}
           {error && (
-            <p
-              style={{
-                fontSize: "12px",
-                color: "var(--state-error)",
-                marginTop: "var(--space-2)",
-              }}
-            >
+            <p style={{ fontSize: 12, color: "#ff3b30", marginTop: 8 }}>
               {error}
             </p>
           )}
 
-          {/* File count */}
           {hasFiles && (
             <p
               style={{
-                fontSize: "11px",
-                color: "var(--text-tertiary)",
-                marginTop: "var(--space-2)",
+                fontSize: 11,
+                color: "rgba(0,0,0,0.32)",
+                marginTop: 8,
                 textAlign: "right",
               }}
             >
@@ -403,12 +447,21 @@ function RequestCard({
   );
 }
 
+/* ── Nav Links ── */
+const navLinks = [
+  { href: "/", label: "메인" },
+  { href: "/strategy", label: "어필 전략" },
+  { href: "/lp-plan", label: "LP 기획안" },
+  { href: "/request", label: "본부 요청", active: true },
+  { href: "/questions", label: "질문지" },
+];
+
+/* ── Page ── */
 export default function RequestPage() {
   const [answers, setAnswers] = useState<HqAnswers>({});
   const [loaded, setLoaded] = useState(false);
-  const debounceRef = useRef<Record<string, ReturnType<typeof setTimeout>>>(
-    {}
-  );
+  const [modal, setModal] = useState<{ src: string; alt: string } | null>(null);
+  const debounceRef = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
 
   useEffect(() => {
     loadHqAnswers().then((a) => {
@@ -428,36 +481,28 @@ export default function RequestPage() {
     });
   }, []);
 
-  const handleFileUpload = useCallback(
-    async (id: string, file: File) => {
-      const uploaded = await uploadFile(file);
-      if (!uploaded) return;
-      setAnswers((prev) => {
-        const existing = prev[id] || {};
-        const files = [...(existing.files || []), uploaded];
-        const next = { ...prev, [id]: { ...existing, files } };
-        saveHqAnswer(id, next[id]);
-        return next;
-      });
-    },
-    []
-  );
+  const handleFileUpload = useCallback(async (id: string, file: File) => {
+    const uploaded = await uploadFile(file);
+    if (!uploaded) return;
+    setAnswers((prev) => {
+      const existing = prev[id] || {};
+      const files = [...(existing.files || []), uploaded];
+      const next = { ...prev, [id]: { ...existing, files } };
+      saveHqAnswer(id, next[id]);
+      return next;
+    });
+  }, []);
 
-  const handleFileDelete = useCallback(
-    async (id: string, filePath: string) => {
-      await deleteFile(filePath);
-      setAnswers((prev) => {
-        const existing = prev[id] || {};
-        const files = (existing.files || []).filter(
-          (f) => f.path !== filePath
-        );
-        const next = { ...prev, [id]: { ...existing, files } };
-        saveHqAnswer(id, next[id]);
-        return next;
-      });
-    },
-    []
-  );
+  const handleFileDelete = useCallback(async (id: string, filePath: string) => {
+    await deleteFile(filePath);
+    setAnswers((prev) => {
+      const existing = prev[id] || {};
+      const files = (existing.files || []).filter((f) => f.path !== filePath);
+      const next = { ...prev, [id]: { ...existing, files } };
+      saveHqAnswer(id, next[id]);
+      return next;
+    });
+  }, []);
 
   const answeredCount = hqRequestItems.filter((item) => {
     const a = answers[item.id];
@@ -480,10 +525,10 @@ export default function RequestPage() {
         style={{
           maxWidth: 640,
           margin: "0 auto",
-          padding: "var(--space-10) var(--space-5)",
+          padding: "80px 20px",
           textAlign: "center",
-          color: "var(--text-tertiary)",
-          fontSize: "14px",
+          color: "rgba(0,0,0,0.32)",
+          fontSize: 14,
         }}
       >
         불러오는 중...
@@ -491,167 +536,218 @@ export default function RequestPage() {
     );
   }
 
-  // global item index for Q numbering
   let globalIndex = 0;
 
   return (
-    <div
-      style={{
-        maxWidth: 640,
-        margin: "0 auto",
-        padding: "var(--space-10) var(--space-5) 120px",
-      }}
-    >
-      {/* Header */}
-      <header style={{ marginBottom: "var(--space-10)" }}>
-        <p
-          style={{
-            fontSize: "12px",
-            fontWeight: 500,
-            color: "var(--accent)",
-            letterSpacing: "0.5px",
-            marginBottom: "var(--space-2)",
-          }}
-        >
-          RAEOAK FRANCHISE
-        </p>
-        <h1
-          style={{
-            fontSize: "clamp(24px, 4vw, 32px)",
-            fontWeight: 700,
-            lineHeight: 1.3,
-            letterSpacing: "-0.5px",
-            color: "var(--text-primary)",
-            marginBottom: "var(--space-4)",
-          }}
-        >
-          가맹본부 확인 요청
-        </h1>
-        <p
-          style={{
-            fontSize: "15px",
-            lineHeight: 1.8,
-            color: "var(--text-secondary)",
-          }}
-        >
-          안녕하세요, 랜딩페이지 제작에 필요한 몇 가지 확인과 자료를
-          요청드립니다.
-          <br />
-          답변해 주시면 바로 반영하겠습니다.
-        </p>
-      </header>
+    <>
+      {modal && (
+        <ImageModal
+          src={modal.src}
+          alt={modal.alt}
+          onClose={() => setModal(null)}
+        />
+      )}
 
-      {/* Progress */}
-      <div
+      {/* Header */}
+      <nav
         style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "var(--space-3)",
-          padding: "var(--space-4) var(--space-5)",
-          background: "var(--bg-surface)",
-          borderRadius: "var(--radius-lg)",
-          marginBottom: "var(--space-8)",
-          border: "1px solid var(--border-subtle)",
+          position: "sticky",
+          top: 0,
+          zIndex: 50,
+          background: "rgba(255,255,255,0.85)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          borderBottom: "1px solid rgba(0,0,0,0.08)",
         }}
       >
         <div
           style={{
-            flex: 1,
-            height: 6,
-            background: "var(--border-subtle)",
-            borderRadius: 3,
-            overflow: "hidden",
+            maxWidth: 640,
+            margin: "0 auto",
+            padding: "0 20px",
+            display: "flex",
+            alignItems: "center",
+            height: 48,
+            gap: 4,
+            overflowX: "auto",
+          }}
+          className="scrollbar-hide"
+        >
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              style={{
+                fontSize: 13,
+                fontWeight: link.active ? 600 : 400,
+                color: link.active ? "#0071e3" : "rgba(0,0,0,0.48)",
+                textDecoration: "none",
+                padding: "6px 12px",
+                borderRadius: 980,
+                background: link.active ? "rgba(0,113,227,0.06)" : "transparent",
+                whiteSpace: "nowrap",
+                transition: "color 150ms",
+              }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      </nav>
+
+      <div
+        style={{
+          maxWidth: 640,
+          margin: "0 auto",
+          padding: "40px 20px 120px",
+        }}
+      >
+        {/* Title */}
+        <header style={{ marginBottom: 40 }}>
+          <p
+            style={{
+              fontSize: 12,
+              fontWeight: 500,
+              color: "#0071e3",
+              letterSpacing: "0.5px",
+              marginBottom: 8,
+            }}
+          >
+            RAEOAK FRANCHISE
+          </p>
+          <h1
+            style={{
+              fontSize: "clamp(24px, 4vw, 32px)",
+              fontWeight: 700,
+              lineHeight: 1.3,
+              letterSpacing: "-0.5px",
+              color: "#1d1d1f",
+              marginBottom: 16,
+            }}
+          >
+            가맹본부 확인 요청
+          </h1>
+          <p style={{ fontSize: 15, lineHeight: 1.8, color: "rgba(0,0,0,0.56)" }}>
+            안녕하세요, 랜딩페이지 제작에 필요한 몇 가지 확인과 자료를
+            요청드립니다.
+            <br />
+            답변해 주시면 바로 반영하겠습니다.
+          </p>
+        </header>
+
+        {/* Progress */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+            padding: "14px 20px",
+            background: "#f5f5f7",
+            borderRadius: 12,
+            marginBottom: 32,
+            border: "1px solid rgba(0,0,0,0.06)",
           }}
         >
           <div
             style={{
-              width: `${(answeredCount / hqRequestItems.length) * 100}%`,
-              height: "100%",
-              background:
-                answeredCount === hqRequestItems.length
-                  ? "var(--state-success)"
-                  : "var(--accent)",
+              flex: 1,
+              height: 6,
+              background: "rgba(0,0,0,0.06)",
               borderRadius: 3,
-              transition: "width var(--duration-normal)",
+              overflow: "hidden",
             }}
-          />
-        </div>
-        <span
-          style={{
-            fontSize: "13px",
-            fontWeight: 600,
-            color:
-              answeredCount === hqRequestItems.length
-                ? "var(--state-success)"
-                : "var(--accent)",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {answeredCount}/{hqRequestItems.length}
-        </span>
-      </div>
-
-      {/* Sections */}
-      {(["confirm", "data", "material"] as RequestCategory[]).map((cat) => {
-        const items = grouped[cat];
-        if (!items) return null;
-        const { label, icon } = categoryLabels[cat];
-        return (
-          <section key={cat} style={{ marginBottom: "var(--space-8)" }}>
+          >
             <div
               style={{
-                fontSize: "14px",
-                fontWeight: 700,
-                color: "var(--text-primary)",
-                marginBottom: "var(--space-4)",
-                display: "flex",
-                alignItems: "center",
-                gap: "var(--space-2)",
-                paddingBottom: "var(--space-3)",
-                borderBottom: "1px solid var(--border-subtle)",
+                width: `${(answeredCount / hqRequestItems.length) * 100}%`,
+                height: "100%",
+                background:
+                  answeredCount === hqRequestItems.length
+                    ? "#34c759"
+                    : "#0071e3",
+                borderRadius: 3,
+                transition: "width 300ms",
               }}
-            >
-              <span>{icon}</span>
-              {label}
-              <span
+            />
+          </div>
+          <span
+            style={{
+              fontSize: 13,
+              fontWeight: 600,
+              color:
+                answeredCount === hqRequestItems.length
+                  ? "#34c759"
+                  : "#0071e3",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {answeredCount}/{hqRequestItems.length}
+          </span>
+        </div>
+
+        {/* Sections */}
+        {(["confirm", "data"] as RequestCategory[]).map((cat) => {
+          const items = grouped[cat];
+          if (!items) return null;
+          const { label, icon } = categoryLabels[cat];
+          return (
+            <section key={cat} style={{ marginBottom: 32 }}>
+              <div
                 style={{
-                  fontSize: "12px",
-                  fontWeight: 500,
-                  color: "var(--text-tertiary)",
-                  marginLeft: "auto",
+                  fontSize: 14,
+                  fontWeight: 700,
+                  color: "#1d1d1f",
+                  marginBottom: 16,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  paddingBottom: 12,
+                  borderBottom: "1px solid rgba(0,0,0,0.08)",
                 }}
               >
-                {items.filter((item) => {
-                  const a = answers[item.id];
-                  return (
-                    a &&
-                    ((a.text && a.text.trim()) ||
-                      (a.files && a.files.length > 0))
-                  );
-                }).length}
-                /{items.length}
-              </span>
-            </div>
+                <span>{icon}</span>
+                {label}
+                <span
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 500,
+                    color: "rgba(0,0,0,0.32)",
+                    marginLeft: "auto",
+                  }}
+                >
+                  {items.filter((item) => {
+                    const a = answers[item.id];
+                    return (
+                      a &&
+                      ((a.text && a.text.trim()) ||
+                        (a.files && a.files.length > 0))
+                    );
+                  }).length}
+                  /{items.length}
+                </span>
+              </div>
 
-            <div className="flex flex-col gap-[var(--space-4)]">
-              {items.map((item) => {
-                const idx = globalIndex++;
-                return (
-                  <RequestCard
-                    key={item.id}
-                    item={item}
-                    index={idx}
-                    answer={answers[item.id]}
-                    onTextChange={handleTextChange}
-                    onFileUpload={handleFileUpload}
-                    onFileDelete={handleFileDelete}
-                  />
-                );
-              })}
-            </div>
-          </section>
-        );
-      })}
-    </div>
+              <div className="flex flex-col gap-[16px]">
+                {items.map((item) => {
+                  const idx = globalIndex++;
+                  return (
+                    <RequestCard
+                      key={item.id}
+                      item={item}
+                      index={idx}
+                      answer={answers[item.id]}
+                      onTextChange={handleTextChange}
+                      onFileUpload={handleFileUpload}
+                      onFileDelete={handleFileDelete}
+                      onImageClick={(src, alt) => setModal({ src, alt })}
+                    />
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    </>
   );
 }
