@@ -28,6 +28,9 @@ export const hqRequestItems: HqRequestItem[] = [
       "블루리본 서베이(전국)와 레드리본 선정이 2025년이 첫 선정이 맞으실까요?",
     description:
       "블루리본 서베이 사이트에서 확인한 결과, 라이옥이 '전국 2025 선정'과 '레드리본 선정'으로 표시되어 있습니다. 2024년 이전에도 선정된 적이 있으셨는지 확인 부탁드립니다.",
+    images: [
+      { src: "/ref/ribbon-logos.png", alt: "블루리본·레드리본 서베이 로고" },
+    ],
     links: [
       {
         label: "블루리본 서베이 — 라이옥 페이지",
