@@ -329,6 +329,26 @@ export default function MainPage() {
 
       <div style={{ marginTop: "var(--space-3)", textAlign: "center" }}>
         <Link
+          href="/request"
+          style={{
+            fontSize: "13px",
+            color: "var(--text-tertiary)",
+            textDecoration: "none",
+            transition: "color var(--duration-fast)",
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.color = "var(--accent)")
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.color = "var(--text-tertiary)")
+          }
+        >
+          본부 확인 요청 →
+        </Link>
+      </div>
+
+      <div style={{ marginTop: "var(--space-3)", textAlign: "center" }}>
+        <Link
           href="/questions"
           style={{
             fontSize: "13px",
