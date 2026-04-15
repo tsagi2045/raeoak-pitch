@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import {
   hqRequestItems,
   categoryLabels,
@@ -447,14 +446,7 @@ function RequestCard({
   );
 }
 
-/* ── Nav Links ── */
-const navLinks = [
-  { href: "/", label: "메인" },
-  { href: "/strategy", label: "어필 전략" },
-  { href: "/lp-plan", label: "LP 기획안" },
-  { href: "/request", label: "본부 요청", active: true },
-  { href: "/questions", label: "질문지" },
-];
+/* ── (nav removed — /request is standalone) ── */
 
 /* ── Page ── */
 export default function RequestPage() {
@@ -547,53 +539,6 @@ export default function RequestPage() {
           onClose={() => setModal(null)}
         />
       )}
-
-      {/* Header */}
-      <nav
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 50,
-          background: "rgba(255,255,255,0.85)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          borderBottom: "1px solid rgba(0,0,0,0.08)",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 640,
-            margin: "0 auto",
-            padding: "0 20px",
-            display: "flex",
-            alignItems: "center",
-            height: 48,
-            gap: 4,
-            overflowX: "auto",
-          }}
-          className="scrollbar-hide"
-        >
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              style={{
-                fontSize: 13,
-                fontWeight: link.active ? 600 : 400,
-                color: link.active ? "#0071e3" : "rgba(0,0,0,0.48)",
-                textDecoration: "none",
-                padding: "6px 12px",
-                borderRadius: 980,
-                background: link.active ? "rgba(0,113,227,0.06)" : "transparent",
-                whiteSpace: "nowrap",
-                transition: "color 150ms",
-              }}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </div>
-      </nav>
 
       <div
         style={{
