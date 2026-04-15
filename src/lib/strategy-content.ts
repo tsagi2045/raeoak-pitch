@@ -197,8 +197,8 @@ export const strategyTabs: StrategyTab[] = [
         id: "C4",
         point: "미디어 검증",
         expression:
-          "이홍렬TV 유튜브 방문 + 와디즈 2회 진행 + 아세안 어워드 + 레드리본(코카콜라). 10년간 쌓인 검증",
-        material: "이홍렬 유튜브 영상 링크, 와디즈 캠페인 2회, 아세안 어워드 (미팅 확인)",
+          "2019 아세안 월드 음식점 선정 + 2025 블루리본·레드리본 전국 선정 + 이홍렬TV 유튜브 + 와디즈 2회. 10년간 쌓인 검증",
+        material: "2019 아세안 월드 음식점, 2025 블루리본·레드리본 (본부 연도 확인 필요), 이홍렬TV, 와디즈 2회",
         images: [
           { src: "/benchmarks/ari-006-brand-trust.jpeg", alt: "아리계곡 1등 브랜드 신뢰" },
           { src: "/benchmarks/crispy-002-youtube.jpeg", alt: "슈퍼크리스피 유튜브·언론 노출" },

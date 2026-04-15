@@ -184,11 +184,11 @@ export const lpSections: LpSection[] = [
       },
       {
         id: "S3",
-        name: "미디어 노출 리스트",
-        description: "이홍렬TV, 와디즈 2회, 아세안 어워드, 레드리본",
+        name: "미디어·인증 리스트",
+        description: "2019 아세안 월드 음식점 + 2025 블루리본·레드리본 전국 + 이홍렬TV + 와디즈 2회",
         status: "partial",
-        source: "미팅 3차",
-        notes: "영상 링크 취합 중. 아세안 어워드 연도 확인 필요",
+        source: "자체 조사 + 미팅 3차",
+        notes: "블루리본·레드리본 2025 첫 선정 여부 본부 확인 필요. 영상 링크 취합 중",
       },
       {
         id: "S4",
