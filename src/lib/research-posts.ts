@@ -10,6 +10,16 @@ export type ResearchPost = {
 
 export const researchPosts: ResearchPost[] = [
   {
+    slug: "youtube-interview",
+    title: "유튜브 인터뷰 채널 섭외 제안",
+    summary:
+      "미아점 가맹점주 인터뷰 영상 제작을 위한 채널 섭외 방향. 슈퍼크리스피 벤치마크 3편 분석 + 자영업자스토리·지방극장·직업의달인 3곳 심층 비교 + 채널별 A/B/C 협상 전략 + 장기 연쇄 인터뷰 로드맵.",
+    verdict: "3곳 병행 제안",
+    verdictTone: "info",
+    date: "2026-04-20",
+    tags: ["유튜브", "인터뷰", "섭외", "미아점"],
+  },
+  {
     slug: "marketkurly",
     title: "마켓컬리 입점 타당성",
     summary:
