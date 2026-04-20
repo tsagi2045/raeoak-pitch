@@ -42,8 +42,9 @@ export default function Header({
 
   return (
     <header
-      className="sticky top-0 z-30"
+      className="sticky z-30"
       style={{
+        top: "48px",
         background: "rgba(255,255,255,0.85)",
         backdropFilter: "blur(20px) saturate(180%)",
         borderBottom: "1px solid var(--border-subtle)",
