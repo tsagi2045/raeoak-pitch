@@ -363,7 +363,10 @@ const approvalItems = [
 
 export default function ResearchPage() {
   return (
-    <main className="mx-auto w-full max-w-[980px] px-[var(--space-6)] pt-[var(--space-8)] pb-[var(--space-10)]">
+    <main
+      className="mx-auto w-full max-w-[980px] px-[var(--space-5)] pt-[var(--space-6)] pb-[var(--space-10)] sm:px-[var(--space-6)] sm:pt-[var(--space-8)]"
+      style={{ wordBreak: "keep-all" }}
+    >
       <Link
         href="/research"
         style={{
@@ -688,6 +691,19 @@ export default function ResearchPage() {
         subtitle="슈퍼크리스피 출연 이력이 검증된 중소형 자영업 인터뷰 채널"
       >
         <div
+          className="sm:hidden"
+          style={{
+            fontSize: "12px",
+            color: "var(--text-tertiary)",
+            textAlign: "center",
+            marginBottom: "var(--space-2)",
+            letterSpacing: "0.3px",
+          }}
+          aria-hidden="true"
+        >
+          ← 좌우로 스크롤 →
+        </div>
+        <div
           style={{
             background: "var(--bg-surface)",
             borderRadius: "var(--radius-xl)",
@@ -698,7 +714,7 @@ export default function ResearchPage() {
           <table
             style={{
               width: "100%",
-              minWidth: "720px",
+              minWidth: "680px",
               borderCollapse: "collapse",
               fontSize: "13px",
             }}
@@ -1393,9 +1409,8 @@ function Table2Col({ rows }: { rows: Translation[] }) {
       {rows.map((r, i) => (
         <div
           key={r.k}
+          className="grid grid-cols-[110px_1fr] gap-[var(--space-3)] sm:grid-cols-[160px_1fr] sm:gap-0"
           style={{
-            display: "grid",
-            gridTemplateColumns: "160px 1fr",
             padding: "var(--space-4) var(--space-5)",
             borderBottom:
               i < rows.length - 1 ? "1px solid var(--border-subtle)" : "none",
@@ -1445,8 +1460,8 @@ function Th({
 }) {
   return (
     <th
+      className="py-2 px-3 sm:py-3 sm:px-4"
       style={{
-        padding: "var(--space-3) var(--space-4)",
         fontSize: "12px",
         fontWeight: 600,
         color: "var(--text-tertiary)",
@@ -1472,8 +1487,8 @@ function Td({
 }) {
   return (
     <td
+      className="py-2 px-3 sm:py-3 sm:px-4"
       style={{
-        padding: "var(--space-3) var(--space-4)",
         fontSize: "13px",
         fontWeight: highlight ? 700 : 500,
         color: highlight
