@@ -22,9 +22,9 @@ const reasons: Reason[] = [
       "컬리 실질 수수료 기준 실수령 2인당 19,000원을 받으려면 판매가 29,230~31,667원이 필요.",
   },
   {
-    label: "경쟁 대비 2.8~3배",
+    label: "수수료 반영 시 판매가 +55%",
     detail:
-      "에머이(10,625원)·소이연남(8,200원)과 비교해 2.8~3배 비싸져 컬리 내 가격 경쟁력 상실.",
+      "제품 1인 단가 9,400원 자체도 컬리 내 최상단. 여기에 수수료 35%를 얹으면 판매가 29,230원(네이버 18,800원 대비 +55%)이 되어 경쟁력이 크게 약화.",
   },
   {
     label: "스마트스토어 존재",
@@ -324,12 +324,14 @@ export default function ResearchPage() {
           style={{
             background: "var(--bg-surface)",
             borderRadius: "var(--radius-xl)",
-            overflow: "hidden",
+            overflowX: "auto",
+            WebkitOverflowScrolling: "touch",
           }}
         >
           <table
             style={{
               width: "100%",
+              minWidth: "560px",
               borderCollapse: "collapse",
               fontSize: "14px",
             }}
@@ -371,23 +373,23 @@ export default function ResearchPage() {
                 }}
               >
                 <Td>
-                  <strong>라이옥 (예상 진입가)</strong>
+                  <strong>라이옥 (네이버 현 판매)</strong>
                 </Td>
                 <Td align="right" mono>
-                  <strong>29,230원</strong>
+                  <strong>18,800원</strong>
                 </Td>
                 <Td align="right" mono>
-                  <strong>14,615</strong>
+                  <strong>9,400</strong>
                 </Td>
                 <Td align="right" muted>
-                  0 (신규)
+                  180건 (네이버)
                 </Td>
               </tr>
             </tbody>
           </table>
         </div>
         <Note>
-          라이옥 예상 1인 단가 <strong>14,615원</strong>은 소이연남(8,800) 1.7배, 에머이(5,313) 2.8배, 풀무원(2,245) 6.5배. 컬리 내 최상단.
+          제품 1인 단가 기준: 소이연남(8,200) <strong>1.15배</strong>, 에머이(5,313) <strong>1.77배</strong>, 풀무원(2,245) 4.19배 — 이미 컬리 내 최상단. 여기에 수수료 35% 반영 시 판매가 <strong>29,230원(1인 14,615원)</strong>으로 뛰어 격차가 더 벌어짐 (→ 04 재무 판단).
         </Note>
       </Section>
 
@@ -646,57 +648,125 @@ export default function ResearchPage() {
 
       {/* Sources */}
       <Section title="07. 데이터 출처">
-        <details
+        <div
           style={{
             background: "var(--bg-surface)",
             borderRadius: "var(--radius-xl)",
             padding: "var(--space-5)",
           }}
         >
-          <summary
-            style={{
-              fontSize: "14px",
-              fontWeight: 600,
-              color: "var(--text-primary)",
-              cursor: "pointer",
-              listStyle: "none",
-            }}
-          >
-            출처 리스트 펼쳐보기
-          </summary>
-          <div
-            style={{
-              marginTop: "var(--space-4)",
-              fontSize: "13px",
-              lineHeight: 1.8,
-              color: "var(--text-secondary)",
-            }}
-          >
-            <strong>Chrome MCP 직접 수집 (2026-04-20)</strong>
-            <ul style={{ listStyle: "disc", paddingLeft: "20px", margin: "8px 0 16px" }}>
-              <li>에머이 소고기 쌀국수 상세·리뷰</li>
-              <li>소이연남 태국 소고기·똠얌 쌀국수 상세·리뷰</li>
-              <li>풀무원 Pho 상세·리뷰</li>
-              <li>컬리 쌀국수·국밥 검색 결과</li>
-            </ul>
-            <strong>언론·업계 자료</strong>
-            <ul style={{ listStyle: "disc", paddingLeft: "20px", margin: "8px 0 16px" }}>
-              <li>녹색경제신문 — 컬리 70개 기준 통과</li>
-              <li>뉴스1 — 컬리 3자 배송 및 수수료</li>
-              <li>지구인사이드 — 컬리 납품 포기 사례</li>
-              <li>디지털데일리 — 컬리 오픈마켓</li>
-              <li>이데일리 — 에머이 입점</li>
-              <li>랭키파이·오픈서베이·데이터솜 — 고객 인구통계</li>
-            </ul>
-            <strong>내부 자료</strong>
-            <ul style={{ listStyle: "disc", paddingLeft: "20px", margin: "8px 0 0" }}>
-              <li>wiki/output/컬리-경쟁환경-입점구조.md — Phase 1·2 상세</li>
-              <li>wiki/output/마켓컬리-입점-타당성-보고서.md — 최종 보고서</li>
-              <li>wiki/entities/라이옥.md — 제품·캐파·원가</li>
-              <li>대표님 구두 확인 (2026-04-20): 원가 30%(부자재 포함 최대 40%), 실수령 목표 2인 19,000원</li>
-            </ul>
-          </div>
-        </details>
+          <SourceGroup
+            title="Chrome 브라우저 직접 수집 (2026-04-20)"
+            items={[
+              {
+                text: "에머이 소고기 쌀국수 키트 상세·리뷰",
+                url: "https://www.kurly.com/goods/5073094",
+              },
+              {
+                text: "소이연남 태국 소고기 쌀국수 상세·리뷰",
+                url: "https://www.kurly.com/goods/5044569",
+              },
+              {
+                text: "소이연남 똠얌 쌀국수 상세",
+                url: "https://www.kurly.com/goods/5055889",
+              },
+              {
+                text: "풀무원 베트남 쌀국수 Pho 4인",
+                url: "https://www.kurly.com/goods/1000331934",
+              },
+              {
+                text: "컬리 쌀국수 검색 결과",
+                url: "https://www.kurly.com/search?sword=%EC%8C%80%EA%B5%AD%EC%88%98",
+              },
+              {
+                text: "컬리 국밥 검색 결과",
+                url: "https://www.kurly.com/search?sword=%EA%B5%AD%EB%B0%A5",
+              },
+            ]}
+          />
+          <SourceGroup
+            title="언론·업계 자료"
+            items={[
+              {
+                text: "녹색경제신문 — 70개 기준 통과해야 입점",
+                url: "https://www.greened.kr/news/articleView.html?idxno=270634",
+              },
+              {
+                text: "뉴스1 — 컬리 3자 배송 강화와 수수료",
+                url: "https://www.news1.kr/industry/distribution/5203364",
+              },
+              {
+                text: "뉴데일리 — 판매자 배송 비중 44%",
+                url: "https://biz.newdaily.co.kr/site/data/html/2024/05/20/2024052000114.html",
+              },
+              {
+                text: "지구인사이드 — 컬리 납품 포기 사례",
+                url: "https://g9inside.com/?p=6471",
+              },
+              {
+                text: "디지털데일리 — 컬리 오픈마켓 성공 조건",
+                url: "https://m.ddaily.co.kr/page/view/2021090811061506404",
+              },
+              {
+                text: "이데일리 — 에머이 마켓컬리 입점",
+                url: "https://m.edaily.co.kr/News/Read?newsId=01564566629113864&mediaCodeNo=257",
+              },
+              {
+                text: "랭키파이 — 마켓컬리 연령별 관심도",
+                url: "https://www.job-post.co.kr/news/articleView.html?idxno=102210",
+              },
+              {
+                text: "데이터솜 — 새벽배송 주 이용자 분석",
+                url: "http://www.datasom.co.kr/news/articleView.html?idxno=116924",
+              },
+              {
+                text: "오픈서베이 — 온라인 식료품 채널 비교",
+                url: "https://www.mobiinside.co.kr/2022/03/07/food-mall-trend/",
+              },
+              {
+                text: "물류신문 — 컬리 충성 고객 성장",
+                url: "https://www.klnews.co.kr/news/articleView.html?idxno=304593",
+              },
+              {
+                text: "ZDNet — 마켓컬리 김포 물류센터",
+                url: "https://zdnet.co.kr/view/?no=20210330162555",
+              },
+              {
+                text: "어패럴뉴스 — 채소 팔던 마켓컬리",
+                url: "https://m.apparelnews.co.kr/news/news_view/?idx=212045",
+              },
+            ]}
+          />
+          <SourceGroup
+            title="컬리 공식"
+            items={[
+              {
+                text: "컬리 품질기준",
+                url: "https://www.kurly.com/introduce/quality-standard",
+              },
+              {
+                text: "컬리 가격정책",
+                url: "https://www.kurly.com/m2/introduce/priceMethod/price_policy.php",
+              },
+              {
+                text: "3P 파트너 오피스",
+                url: "https://3p-partner.kurly.com/",
+              },
+            ]}
+          />
+          <SourceGroup
+            title="내부 자료"
+            items={[
+              { text: "wiki/output/컬리-경쟁환경-입점구조.md — Phase 1·2 상세" },
+              { text: "wiki/output/마켓컬리-입점-타당성-보고서.md — 최종 보고서" },
+              { text: "wiki/entities/라이옥.md — 제품·캐파·원가" },
+              {
+                text: "대표님 구두 확인 (2026-04-20): 원가 30%(부자재 포함 최대 40%), 실수령 목표 2인 19,000원",
+              },
+            ]}
+            last
+          />
+        </div>
       </Section>
 
       <div
@@ -933,6 +1003,85 @@ function Note({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
+    </div>
+  );
+}
+
+type SourceItem = { text: string; url?: string };
+
+function SourceGroup({
+  title,
+  items,
+  last = false,
+}: {
+  title: string;
+  items: SourceItem[];
+  last?: boolean;
+}) {
+  return (
+    <div style={{ marginBottom: last ? 0 : "var(--space-5)" }}>
+      <div
+        style={{
+          fontSize: "12px",
+          fontWeight: 700,
+          color: "var(--text-primary)",
+          letterSpacing: "0.3px",
+          textTransform: "uppercase",
+          marginBottom: "var(--space-3)",
+        }}
+      >
+        {title}
+      </div>
+      <ul
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "var(--space-2)",
+          listStyle: "none",
+          padding: 0,
+          margin: 0,
+        }}
+      >
+        {items.map((item, i) => (
+          <li
+            key={i}
+            style={{
+              fontSize: "13px",
+              lineHeight: 1.6,
+              color: "var(--text-secondary)",
+              paddingLeft: "14px",
+              position: "relative",
+            }}
+          >
+            <span
+              style={{
+                position: "absolute",
+                left: 0,
+                color: "var(--text-tertiary)",
+              }}
+            >
+              ·
+            </span>
+            {item.url ? (
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: "var(--accent)",
+                  textDecoration: "none",
+                  wordBreak: "break-word",
+                }}
+                className="transition-opacity duration-150 hover:opacity-70"
+              >
+                {item.text}
+              </a>
+            ) : (
+              item.text
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
