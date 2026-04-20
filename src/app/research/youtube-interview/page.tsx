@@ -543,6 +543,7 @@ export default function ResearchPage() {
               href={v.url}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`${v.channel} — ${v.title} (YouTube 새 탭에서 열기)`}
               style={{
                 display: "block",
                 padding: "var(--space-5)",
@@ -552,8 +553,9 @@ export default function ResearchPage() {
                     : "none",
                 textDecoration: "none",
                 color: "inherit",
+                WebkitTapHighlightColor: "transparent",
               }}
-              className="transition-colors duration-150 hover:bg-black/[0.02]"
+              className="transition-colors duration-150 hover:bg-black/[0.02] active:bg-black/[0.04]"
             >
               <div
                 className="flex items-center justify-between flex-wrap"
@@ -561,12 +563,16 @@ export default function ResearchPage() {
               >
                 <div
                   style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
                     fontSize: "13px",
                     fontWeight: 700,
                     color: "var(--accent)",
                     letterSpacing: "-0.2px",
                   }}
                 >
+                  <PlayIcon />
                   {v.channel}
                 </div>
                 <div
@@ -597,9 +603,24 @@ export default function ResearchPage() {
                   fontSize: "13px",
                   fontWeight: 400,
                   color: "var(--text-secondary)",
+                  marginBottom: "var(--space-3)",
                 }}
               >
                 출연: {v.owner}
+              </div>
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  color: "var(--accent)",
+                  letterSpacing: "0.2px",
+                }}
+              >
+                YouTube에서 보기
+                <ExternalLinkIcon />
               </div>
             </a>
           ))}
@@ -1435,10 +1456,11 @@ function ChannelHeader({ name, url }: { name: string; url: string }) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={`${name} 채널 (새 탭)`}
       style={{
         display: "inline-flex",
-        flexDirection: "column",
-        gap: "2px",
+        alignItems: "center",
+        gap: "4px",
         color: "var(--text-primary)",
         textDecoration: "none",
         fontSize: "13px",
@@ -1447,7 +1469,44 @@ function ChannelHeader({ name, url }: { name: string; url: string }) {
       className="transition-opacity duration-150 hover:opacity-70"
     >
       {name}
+      <ExternalLinkIcon />
     </a>
+  );
+}
+
+function PlayIcon() {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      style={{ flexShrink: 0 }}
+    >
+      <path d="M8 5v14l11-7z" />
+    </svg>
+  );
+}
+
+function ExternalLinkIcon() {
+  return (
+    <svg
+      width="11"
+      height="11"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      style={{ flexShrink: 0 }}
+    >
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      <polyline points="15 3 21 3 21 9" />
+      <line x1="10" y1="14" x2="21" y2="3" />
+    </svg>
   );
 }
 
