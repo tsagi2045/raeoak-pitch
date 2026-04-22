@@ -16,12 +16,14 @@ type PremiumBroth = {
   discounted?: string;
   hook: string;
   reviews: string;
+  id: string;
 };
 type Competitor = {
   brand: string;
   price: string;
   perPerson: string;
   kurlyOnly: boolean;
+  id?: string;
 };
 type Option = {
   code: string;
@@ -117,15 +119,15 @@ const feeScenarios = [
 ];
 
 const competitors: Competitor[] = [
-  { brand: "에머이 소고기 쌀국수 키트 2인", price: "12,500원", perPerson: "6,250", kurlyOnly: true },
-  { brand: "리틀 비엣남 소고기 쌀국수 2인", price: "8,500원 (할)", perPerson: "4,250", kurlyOnly: true },
-  { brand: "쌉(SAAP) 팟타이 2인", price: "14,280원 (할)", perPerson: "7,140", kurlyOnly: true },
-  { brand: "쌉(SAAP) 팟씨유 2인", price: "15,800원", perPerson: "7,900", kurlyOnly: true },
-  { brand: "툭툭누들타이 갈비 쌀국수 1인", price: "7,565원 (할)", perPerson: "7,565", kurlyOnly: true },
-  { brand: "에머이 소고기 쌀국수 2종 택1", price: "7,268원 (할)", perPerson: "7,268", kurlyOnly: true },
-  { brand: "리틀 비엣남 마라 소고기 쌀국수", price: "5,800원 (할)", perPerson: "5,800", kurlyOnly: true },
-  { brand: "CJ 베트남 쌀국수 2인", price: "5,980원 (할)", perPerson: "2,990", kurlyOnly: false },
-  { brand: "풀무원 Pho 4인", price: "9,980원", perPerson: "2,495", kurlyOnly: false },
+  { brand: "에머이 소고기 쌀국수 키트 2인", price: "12,500원", perPerson: "6,250", kurlyOnly: true, id: "5073094" },
+  { brand: "리틀 비엣남 소고기 쌀국수 2인", price: "8,500원 (할)", perPerson: "4,250", kurlyOnly: true, id: "1000417672" },
+  { brand: "쌉(SAAP) 팟타이 2인", price: "14,280원 (할)", perPerson: "7,140", kurlyOnly: true, id: "1000281727" },
+  { brand: "쌉(SAAP) 팟씨유 2인", price: "15,800원", perPerson: "7,900", kurlyOnly: true, id: "1000451611" },
+  { brand: "툭툭누들타이 갈비 쌀국수 1인", price: "7,565원 (할)", perPerson: "7,565", kurlyOnly: true, id: "1001032896" },
+  { brand: "에머이 소고기 쌀국수 2종 택1", price: "7,268원 (할)", perPerson: "7,268", kurlyOnly: true, id: "1000958350" },
+  { brand: "리틀 비엣남 마라 소고기 쌀국수", price: "5,800원 (할)", perPerson: "5,800", kurlyOnly: true, id: "1000632691" },
+  { brand: "CJ 베트남 쌀국수 2인", price: "5,980원 (할)", perPerson: "2,990", kurlyOnly: false, id: "1001531569" },
+  { brand: "풀무원 Pho 4인", price: "9,980원", perPerson: "2,495", kurlyOnly: false, id: "1000331934" },
 ];
 
 const premiumBroths: PremiumBroth[] = [
@@ -135,6 +137,7 @@ const premiumBroths: PremiumBroth[] = [
     price: "17,000원~",
     hook: "허영만 <식객> 맛집 + Kurly Only",
     reviews: "9,999+",
+    id: "5001235",
   },
   {
     brand: "워커힐",
@@ -143,6 +146,7 @@ const premiumBroths: PremiumBroth[] = [
     discounted: "14,790원",
     hook: "호텔 맛집 브랜드",
     reviews: "9,999+",
+    id: "5034225",
   },
   {
     brand: "워커힐",
@@ -151,6 +155,7 @@ const premiumBroths: PremiumBroth[] = [
     discounted: "13,050원",
     hook: "호텔 프리미엄",
     reviews: "226",
+    id: "1001421124",
   },
   {
     brand: "조선호텔",
@@ -159,6 +164,7 @@ const premiumBroths: PremiumBroth[] = [
     discounted: "12,920원",
     hook: "호텔 브랜드",
     reviews: "999+",
+    id: "1000128433",
   },
   {
     brand: "사미헌",
@@ -166,6 +172,7 @@ const premiumBroths: PremiumBroth[] = [
     price: "13,000원",
     hook: "전통 맛집",
     reviews: "9,999+",
+    id: "5026468",
   },
   {
     brand: "55년 종로 계림",
@@ -174,6 +181,7 @@ const premiumBroths: PremiumBroth[] = [
     discounted: "16,910원",
     hook: "55년 전통 맛집 + Kurly Only",
     reviews: "999+",
+    id: "5075636",
   },
 ];
 
@@ -209,15 +217,15 @@ const options: Option[] = [
   },
 ];
 
-const kurlyOnlyCases = [
-  { brand: "55년 전통 종로 계림", product: "마늘 닭도리탕", price: "16,910원" },
-  { brand: "아소정", product: "궁중 대추 소갈비찜", price: "26,550원" },
-  { brand: "오근내닭갈비", product: "국산 닭다리살 닭갈비", price: "15,210원" },
-  { brand: "에머이", product: "소고기 쌀국수 키트 2인", price: "12,500원" },
-  { brand: "쌉(SAAP)", product: "팟타이 2인", price: "14,280원" },
-  { brand: "서촌 영화루", product: "고추 간짜장 2인", price: "9,180원" },
-  { brand: "전주 베테랑", product: "즉석우동 2인", price: "6,230원" },
-  { brand: "성수동 팩피", product: "감바스 파스타", price: "9,600원" },
+const kurlyOnlyCases: { brand: string; product: string; price: string; id: string }[] = [
+  { brand: "55년 전통 종로 계림", product: "마늘 닭도리탕", price: "16,910원", id: "5075636" },
+  { brand: "아소정", product: "궁중 대추 소갈비찜", price: "26,550원", id: "1001343977" },
+  { brand: "오근내닭갈비", product: "국산 닭다리살 닭갈비", price: "15,210원", id: "1001929284" },
+  { brand: "에머이", product: "소고기 쌀국수 키트 2인", price: "12,500원", id: "5073094" },
+  { brand: "쌉(SAAP)", product: "팟타이 2인", price: "14,280원", id: "1000281727" },
+  { brand: "서촌 영화루", product: "고추 간짜장 2인", price: "9,180원", id: "1000198866" },
+  { brand: "전주 베테랑", product: "즉석우동 2인", price: "6,230원", id: "1000231908" },
+  { brand: "성수동 팩피", product: "감바스 파스타", price: "9,600원", id: "1000315302" },
 ];
 
 const roadmap = [
@@ -590,6 +598,314 @@ export default function KurlyOnlyPage() {
           합니다. 권장 정가는 <strong>32,000원</strong>이며, 할인 노출 시 <strong>27,000~28,000원</strong>
           수준으로 체감 단가를 낮추는 전략을 제안드립니다.
         </Note>
+
+        <h3
+          style={{
+            fontSize: "16px",
+            fontWeight: 700,
+            color: "var(--text-primary)",
+            marginTop: "var(--space-8)",
+            marginBottom: "var(--space-3)",
+            letterSpacing: "-0.3px",
+          }}
+        >
+          왜 1P를 먼저 권장드리는가 — 3P는 완전 배제인가
+        </h3>
+        <p
+          style={{
+            fontSize: "14px",
+            lineHeight: 1.7,
+            color: "var(--text-secondary)",
+            marginBottom: "var(--space-4)",
+          }}
+        >
+          수수료만 놓고 보면 3P(15~20%)가 1P(35~40%)의 절반 수준이라 매력적입니다. 그러나 라이옥은
+          <strong> 냉동 밀키트</strong>이므로 3P를 택하면 셀러가 냉동 물류를 직접 구축해야
+          합니다. 판단 기준을 표로 정리하면 아래와 같습니다.
+        </p>
+
+        <div
+          style={{
+            background: "var(--bg-surface)",
+            borderRadius: "var(--radius-xl)",
+            overflowX: "auto",
+            WebkitOverflowScrolling: "touch",
+            marginBottom: "var(--space-5)",
+          }}
+        >
+          <table
+            style={{
+              width: "100%",
+              minWidth: "560px",
+              borderCollapse: "collapse",
+              fontSize: "14px",
+            }}
+          >
+            <thead>
+              <tr
+                style={{
+                  borderBottom: "1px solid var(--border-subtle)",
+                  textAlign: "left",
+                }}
+              >
+                <Th>항목</Th>
+                <Th>1P (권장)</Th>
+                <Th>3P (유보)</Th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={{ borderBottom: "1px solid var(--border-subtle)" }}>
+                <Td>
+                  <strong>수수료</strong>
+                </Td>
+                <Td muted>35~40%</Td>
+                <Td muted>15~20%</Td>
+              </tr>
+              <tr style={{ borderBottom: "1px solid var(--border-subtle)" }}>
+                <Td>
+                  <strong>냉동 물류</strong>
+                </Td>
+                <Td muted>컬리 센터·샛별배송 인프라 사용</Td>
+                <Td muted>셀러가 냉동 3PL 직접 계약 필요</Td>
+              </tr>
+              <tr style={{ borderBottom: "1px solid var(--border-subtle)" }}>
+                <Td>
+                  <strong>초기 투자</strong>
+                </Td>
+                <Td muted>패키지·콘텐츠 제작 수준 (수백만 원)</Td>
+                <Td muted>드라이아이스·냉동 택배 시스템 구축 (수천만 원)</Td>
+              </tr>
+              <tr style={{ borderBottom: "1px solid var(--border-subtle)" }}>
+                <Td>
+                  <strong>고정비</strong>
+                </Td>
+                <Td muted>창고 관리비 소액</Td>
+                <Td muted>월 냉동 3PL 보관·운송비 100~300만 원</Td>
+              </tr>
+              <tr style={{ borderBottom: "1px solid var(--border-subtle)" }}>
+                <Td>
+                  <strong>샛별배송 노출</strong>
+                </Td>
+                <Td muted>표준 제공</Td>
+                <Td muted>제한적 (파트너 물류 조건 따름)</Td>
+              </tr>
+              <tr style={{ borderBottom: "1px solid var(--border-subtle)" }}>
+                <Td>
+                  <strong>MD 지원 · 알고리즘 노출</strong>
+                </Td>
+                <Td muted>Kurly Only 프로모션 대상</Td>
+                <Td muted>상대적으로 약함</Td>
+              </tr>
+              <tr>
+                <Td>
+                  <strong>브랜드 신뢰도</strong>
+                </Td>
+                <Td muted>컬리가 검수·보증</Td>
+                <Td muted>셀러 책임</Td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div
+          className="grid"
+          style={{
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: "var(--space-4)",
+            marginBottom: "var(--space-5)",
+          }}
+        >
+          <div
+            style={{
+              background: "var(--bg-surface)",
+              borderRadius: "var(--radius-xl)",
+              padding: "var(--space-5)",
+              borderLeft: "3px solid #1fa162",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "11px",
+                fontWeight: 700,
+                color: "#1fa162",
+                letterSpacing: "0.5px",
+                marginBottom: "var(--space-2)",
+              }}
+            >
+              1P 선택 근거
+            </div>
+            <ul
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-2)",
+                listStyle: "none",
+                padding: 0,
+                margin: 0,
+              }}
+            >
+              {[
+                "냉동 콜드체인·샛별배송 인프라를 컬리가 전담 (셀러 투자 최소화)",
+                "Kurly Only 프리미엄 포지션·MD 노출 최대치 확보",
+                "밀키트·맛집 카테고리의 성공 사례가 모두 1P 경로 (에머이·벽제갈비·55년 종로 계림)",
+                "초기 리스크 작음 — 탈락·부진 시 원상 복귀 가능",
+              ].map((t, i) => (
+                <li
+                  key={i}
+                  style={{
+                    fontSize: "13px",
+                    lineHeight: 1.6,
+                    color: "var(--text-secondary)",
+                    paddingLeft: "14px",
+                    position: "relative",
+                  }}
+                >
+                  <span
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      color: "var(--text-tertiary)",
+                    }}
+                  >
+                    ·
+                  </span>
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div
+            style={{
+              background: "var(--bg-surface)",
+              borderRadius: "var(--radius-xl)",
+              padding: "var(--space-5)",
+              borderLeft: "3px solid #d17a00",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "11px",
+                fontWeight: 700,
+                color: "#d17a00",
+                letterSpacing: "0.5px",
+                marginBottom: "var(--space-2)",
+              }}
+            >
+              3P 유보 근거
+            </div>
+            <ul
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-2)",
+                listStyle: "none",
+                padding: 0,
+                margin: 0,
+              }}
+            >
+              {[
+                "냉동 3PL 파트너(CJ대한통운 냉동·팜스프레스 등) 신규 계약 필요",
+                "드라이아이스 포장·출고 관리 운영 부담",
+                "월 물량이 적을 때는 고정비 비중이 수수료 절감분을 초과",
+                "샛별배송 제한 → 컬리 고객 핵심 구매 이유 약화",
+                "MD·알고리즘 지원이 상대적으로 약해 초기 노출 어려움",
+              ].map((t, i) => (
+                <li
+                  key={i}
+                  style={{
+                    fontSize: "13px",
+                    lineHeight: 1.6,
+                    color: "var(--text-secondary)",
+                    paddingLeft: "14px",
+                    position: "relative",
+                  }}
+                >
+                  <span
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      color: "var(--text-tertiary)",
+                    }}
+                  >
+                    ·
+                  </span>
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div
+          style={{
+            background: "rgba(31,161,98,0.06)",
+            borderRadius: "var(--radius-xl)",
+            padding: "var(--space-5) var(--space-6)",
+            border: "1px solid rgba(31,161,98,0.25)",
+          }}
+        >
+          <div
+            style={{
+              fontSize: "12px",
+              fontWeight: 700,
+              color: "#0b6b3a",
+              letterSpacing: "0.5px",
+              marginBottom: "var(--space-2)",
+            }}
+          >
+            3P 전환 검토 조건 (장기)
+          </div>
+          <p
+            style={{
+              fontSize: "13.5px",
+              lineHeight: 1.7,
+              color: "var(--text-primary)",
+              marginBottom: "var(--space-3)",
+            }}
+          >
+            3P를 완전히 배제하는 것은 아닙니다. 1P로 런칭하여 월 판매가 안정화된 이후 아래 조건이
+            충족되면 3P 병행 또는 전환을 검토할 수 있습니다.
+          </p>
+          <ul
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "var(--space-2)",
+              listStyle: "none",
+              padding: 0,
+              margin: 0,
+            }}
+          >
+            {[
+              "① 월 판매량이 1,000인분 이상 안정적으로 유지되어 수수료 절감 효과(월 200~400만 원 이상)가 발생할 때",
+              "② 냉동 3PL 파트너와 안정적 계약 조건(물량 기준 할인)을 확보할 때",
+              "③ 컬리 외 다른 채널(쿠팡·B2B 등)로 확장하며 자체 냉동 물류 필요성이 동시에 커질 때",
+            ].map((t, i) => (
+              <li
+                key={i}
+                style={{
+                  fontSize: "13px",
+                  lineHeight: 1.6,
+                  color: "var(--text-secondary)",
+                  paddingLeft: "20px",
+                  position: "relative",
+                }}
+              >
+                <span
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    color: "var(--accent)",
+                    fontWeight: 700,
+                  }}
+                >
+                  ✓
+                </span>
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
       </Section>
 
       {/* 03. 베트남 · 아시안 밀키트 가격대 */}
@@ -642,7 +958,13 @@ export default function KurlyOnlyPage() {
             <tbody>
               {competitors.map((c, i) => (
                 <tr key={i} style={{ borderBottom: "1px solid var(--border-subtle)" }}>
-                  <Td>{c.brand}</Td>
+                  <Td>
+                    {c.id ? (
+                      <ProductLink id={c.id}>{c.brand}</ProductLink>
+                    ) : (
+                      c.brand
+                    )}
+                  </Td>
                   <Td align="right" mono>
                     {c.price}
                   </Td>
@@ -733,7 +1055,9 @@ export default function KurlyOnlyPage() {
                   <Td>
                     <strong>{p.brand}</strong>
                   </Td>
-                  <Td muted>{p.product}</Td>
+                  <Td muted>
+                    <ProductLink id={p.id}>{p.product}</ProductLink>
+                  </Td>
                   <Td align="right" mono>
                     {p.discounted ? `${p.discounted} (할)` : p.price}
                   </Td>
@@ -779,13 +1103,19 @@ export default function KurlyOnlyPage() {
           }}
         >
           {kurlyOnlyCases.map((c, i) => (
-            <div
+            <a
               key={i}
+              href={`https://www.kurly.com/goods/${c.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 background: "var(--bg-surface)",
                 borderRadius: "var(--radius-lg)",
                 padding: "var(--space-4)",
+                textDecoration: "none",
+                display: "block",
               }}
+              className="transition-opacity duration-150 hover:opacity-80"
             >
               <div
                 style={{
@@ -819,7 +1149,7 @@ export default function KurlyOnlyPage() {
               >
                 {c.price}
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </Section>
@@ -1465,6 +1795,31 @@ function Td({
     >
       {children}
     </td>
+  );
+}
+
+function ProductLink({
+  id,
+  children,
+}: {
+  id: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <a
+      href={`https://www.kurly.com/goods/${id}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        color: "inherit",
+        textDecoration: "underline",
+        textDecorationColor: "var(--border-subtle)",
+        textUnderlineOffset: "3px",
+      }}
+      className="transition-opacity duration-150 hover:opacity-70"
+    >
+      {children}
+    </a>
   );
 }
 
