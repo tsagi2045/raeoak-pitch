@@ -619,9 +619,10 @@ export default function KurlyOnlyPage() {
             marginBottom: "var(--space-4)",
           }}
         >
-          수수료만 놓고 보면 3P(15~20%)가 1P(35~40%)의 절반 수준이라 매력적입니다. 그러나 라이옥은
-          <strong> 냉동 밀키트</strong>이므로 3P를 택하면 셀러가 냉동 물류를 직접 구축해야
-          합니다. 판단 기준을 표로 정리하면 아래와 같습니다.
+          수수료만 놓고 보면 3P(15~20%)가 1P(35~40%)의 절반 수준이라 매력적입니다. 라이옥은 이미
+          <strong> 부산 공장에서 냉동 택배사와 계약을 체결하고 스마트스토어 냉동 배송을 운영 중</strong>
+          이므로 3P 진입은 기술적으로 가능합니다. 다만 컬리 고객의 핵심 구매 이유인
+          <strong> 샛별배송이 제공되지 않는다</strong>는 점이 본질적 제약입니다.
         </p>
 
         <div
@@ -665,29 +666,36 @@ export default function KurlyOnlyPage() {
                 <Td>
                   <strong>냉동 물류</strong>
                 </Td>
-                <Td muted>컬리 센터·샛별배송 인프라 사용</Td>
-                <Td muted>셀러가 냉동 3PL 직접 계약 필요</Td>
+                <Td muted>컬리 센터 · 샛별배송 인프라 사용</Td>
+                <Td muted>부산 공장 직출고 + 기존 냉동 택배사 활용</Td>
               </tr>
               <tr style={{ borderBottom: "1px solid var(--border-subtle)" }}>
                 <Td>
                   <strong>초기 투자</strong>
                 </Td>
-                <Td muted>패키지·콘텐츠 제작 수준 (수백만 원)</Td>
-                <Td muted>드라이아이스·냉동 택배 시스템 구축 (수천만 원)</Td>
+                <Td muted>컬리 전용 패키지 · 콘텐츠 제작</Td>
+                <Td muted>기존 운영 시스템 활용 — 추가 투자 최소</Td>
               </tr>
               <tr style={{ borderBottom: "1px solid var(--border-subtle)" }}>
                 <Td>
-                  <strong>고정비</strong>
+                  <strong>배송 리드타임</strong>
                 </Td>
-                <Td muted>창고 관리비 소액</Td>
-                <Td muted>월 냉동 3PL 보관·운송비 100~300만 원</Td>
+                <Td muted>주문 → 익일 새벽 도착</Td>
+                <Td muted>부산→수도권 D+1 오후 ~ D+2</Td>
               </tr>
               <tr style={{ borderBottom: "1px solid var(--border-subtle)" }}>
                 <Td>
-                  <strong>샛별배송 노출</strong>
+                  <strong>샛별배송</strong>
                 </Td>
-                <Td muted>표준 제공</Td>
-                <Td muted>제한적 (파트너 물류 조건 따름)</Td>
+                <Td muted>제공 (컬리 핵심 가치)</Td>
+                <Td muted>원칙적 불가 — 일반 냉동 택배</Td>
+              </tr>
+              <tr style={{ borderBottom: "1px solid var(--border-subtle)" }}>
+                <Td>
+                  <strong>여름철 품질 리스크</strong>
+                </Td>
+                <Td muted>컬리 콜드체인 책임</Td>
+                <Td muted>셀러 부담 (기존 경험으로 관리 가능)</Td>
               </tr>
               <tr style={{ borderBottom: "1px solid var(--border-subtle)" }}>
                 <Td>
@@ -804,11 +812,11 @@ export default function KurlyOnlyPage() {
               }}
             >
               {[
-                "냉동 3PL 파트너(CJ대한통운 냉동·팜스프레스 등) 신규 계약 필요",
-                "드라이아이스 포장·출고 관리 운영 부담",
-                "월 물량이 적을 때는 고정비 비중이 수수료 절감분을 초과",
-                "샛별배송 제한 → 컬리 고객 핵심 구매 이유 약화",
-                "MD·알고리즘 지원이 상대적으로 약해 초기 노출 어려움",
+                "샛별배송 불가 → 컬리 고객의 핵심 구매 이유 상실",
+                "부산 → 수도권 D+1 오후 ~ D+2 리드타임 (컬리 고객 기대치 미달)",
+                "여름철 해동 품질 리스크는 셀러 부담 (현재 운영 경험으로 관리는 가능하나 반품 시 전량 폐기)",
+                "Kurly Only 프리미엄 포지션·MD 노출 약화 (가격 정당화 논리의 근거 상실)",
+                '"컬리가 검수·보증한 상품" 인식 약화 → 대표님이 목표하시는 맛집 프리미엄 스토리 희석',
               ].map((t, i) => (
                 <li
                   key={i}
@@ -863,8 +871,10 @@ export default function KurlyOnlyPage() {
               marginBottom: "var(--space-3)",
             }}
           >
-            3P를 완전히 배제하는 것은 아닙니다. 1P로 런칭하여 월 판매가 안정화된 이후 아래 조건이
-            충족되면 3P 병행 또는 전환을 검토할 수 있습니다.
+            라이옥은 이미 냉동 택배 배송을 운영 중이라 3P 진입 자체는 기술적 장벽이 낮습니다.
+            그럼에도 1P를 먼저 권장드리는 이유는 컬리 샛별배송·MD 지원·브랜드 인식이 전용 SKU
+            프리미엄 전략의 성립 조건이기 때문입니다. 아래 시점에 3P 병행 또는 전환을 재검토할 수
+            있습니다.
           </p>
           <ul
             style={{
@@ -877,9 +887,10 @@ export default function KurlyOnlyPage() {
             }}
           >
             {[
-              "① 월 판매량이 1,000인분 이상 안정적으로 유지되어 수수료 절감 효과(월 200~400만 원 이상)가 발생할 때",
-              "② 냉동 3PL 파트너와 안정적 계약 조건(물량 기준 할인)을 확보할 때",
-              "③ 컬리 외 다른 채널(쿠팡·B2B 등)로 확장하며 자체 냉동 물류 필요성이 동시에 커질 때",
+              "① 1P 심사에서 탈락한 경우 — 3P가 사실상 유일한 컬리 진입 경로가 될 때",
+              "② 1P 런칭 3개월 후 성과 부진(리뷰 <50 / 재구매 <10%) 시 저수수료로 재포지셔닝할 때",
+              "③ 컬리 외 쿠팡·오아시스 등 멀티채널 동시 확장으로 자체 물류 단가가 추가 개선될 때",
+              "④ 타깃을 샛별배송 비의존 세그먼트(B2B, 법인 선물, 지방 거주자)로 재설정할 때",
             ].map((t, i) => (
               <li
                 key={i}
