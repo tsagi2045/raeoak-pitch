@@ -10,6 +10,16 @@ export type ResearchPost = {
 
 export const researchPosts: ResearchPost[] = [
   {
+    slug: "kurly-only",
+    title: "컬리 전용 상품 기획 — 베트남 국밥 단독 런칭",
+    summary:
+      "컬리 내 베트남 국밥 = 0개 블루오션. 프리미엄 한식 탕 밀키트 1인 14,000~17,000원 판매 실증. 라이옥 국밥을 컬리 Only SKU로 런칭하고 쌀국수는 스마트스토어에 유지하는 전략 제안. 컬리 수수료 구조와 40% 기준 판매가 역산 포함.",
+    verdict: "국밥 단독 GO",
+    verdictTone: "go",
+    date: "2026-04-22",
+    tags: ["입점", "마켓컬리", "전용 SKU", "국밥"],
+  },
+  {
     slug: "youtube-interview",
     title: "유튜브 인터뷰 채널 섭외 제안",
     summary:
