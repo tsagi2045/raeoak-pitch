@@ -1343,8 +1343,182 @@ export default function KurlyOnlyPage() {
         </Note>
       </Section>
 
-      {/* 08. 포지셔닝 */}
-      <Section title="08. 포지셔닝 메시지">
+      {/* 08. 컬리 전용 SKU 구성 제안 */}
+      <Section
+        title="08. 컬리 전용 SKU 구성 제안"
+        subtitle="면 제외 + 즉석밥 동봉 — '국밥' 네이밍과 포지셔닝 정합성 확보"
+      >
+        <p
+          style={{
+            fontSize: "14px",
+            lineHeight: 1.7,
+            color: "var(--text-secondary)",
+            marginBottom: "var(--space-4)",
+          }}
+        >
+          매장 국밥은 면이 포함된 세트로 운영하고 있습니다. 다만 컬리에서는
+          &ldquo;국밥&rdquo;이라는 네이밍과 제품 구성이 일치하는 편이 소비자 이해·구매 결정
+          속도에 유리합니다. 컬리 전용 SKU는 <strong>면을 제외하고 즉석밥을 동봉</strong>하는
+          구성으로 제안드립니다.
+        </p>
+
+        <div
+          className="grid"
+          style={{
+            gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+            gap: "var(--space-3)",
+            marginBottom: "var(--space-4)",
+          }}
+        >
+          {[
+            { label: "밥", detail: "즉석밥 1팩 (햇반 타입)", primary: true },
+            { label: "육수", detail: "베트남식 사골 국물" },
+            { label: "고기 고명", detail: "소고기 양지·차돌 등" },
+            { label: "채소", detail: "숙주·고수·양파 등" },
+            { label: "양념장", detail: "라이옥 시그니처" },
+          ].map((item, i) => (
+            <div
+              key={i}
+              style={{
+                background: item.primary
+                  ? "linear-gradient(135deg, rgba(31,161,98,0.14), rgba(31,161,98,0.04))"
+                  : "var(--bg-surface)",
+                borderRadius: "var(--radius-xl)",
+                padding: "var(--space-4)",
+                border: item.primary
+                  ? "2px solid rgba(31,161,98,0.4)"
+                  : "2px solid transparent",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  color: item.primary ? "#0b6b3a" : "var(--text-tertiary)",
+                  letterSpacing: "0.6px",
+                  marginBottom: "var(--space-1)",
+                }}
+              >
+                {item.primary ? "신규 동봉" : "기존 유지"}
+              </div>
+              <div
+                style={{
+                  fontSize: "16px",
+                  fontWeight: 700,
+                  color: "var(--text-primary)",
+                  marginBottom: "var(--space-1)",
+                  letterSpacing: "-0.3px",
+                }}
+              >
+                {item.label}
+              </div>
+              <div
+                style={{
+                  fontSize: "12px",
+                  lineHeight: 1.5,
+                  color: "var(--text-secondary)",
+                }}
+              >
+                {item.detail}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "var(--space-2)",
+            fontSize: "13px",
+            color: "var(--text-tertiary)",
+            marginBottom: "var(--space-5)",
+            paddingLeft: "var(--space-2)",
+          }}
+        >
+          <span style={{ textDecoration: "line-through" }}>쌀국수 면</span>
+          <span>— 컬리 전용 SKU에서는 제외 (쌀국수 SKU와 차별화)</span>
+        </div>
+
+        <div
+          className="grid"
+          style={{
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: "var(--space-4)",
+          }}
+        >
+          {[
+            {
+              num: "01",
+              title: "네이밍 정합성",
+              detail:
+                "'국밥 = 밥이 기본'이라는 한국 소비자 기대와 일치합니다. 상세페이지에서 '국밥인데 면이 들어있다'고 설명하는 부담이 없어집니다.",
+            },
+            {
+              num: "02",
+              title: "쌀국수 SKU와의 명확한 구분",
+              detail:
+                "컬리 MD 심사·고객 모두 밥/면 차이로 두 카테고리를 한 번에 이해합니다. '쌀국수랑 뭐가 다른가' 질문이 원천 차단됩니다.",
+            },
+            {
+              num: "03",
+              title: "프리미엄 한식 탕 포지션 편입",
+              detail:
+                "벽제갈비 설렁탕·워커힐 갈비탕처럼 '밥이 어울리는 한 그릇' 카테고리에 자연스럽게 들어갑니다. 1인 14,000원대 가격 정당화 논리가 강해집니다.",
+            },
+          ].map((r) => (
+            <div
+              key={r.num}
+              style={{
+                background: "var(--bg-surface)",
+                borderRadius: "var(--radius-xl)",
+                padding: "var(--space-5)",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  color: "var(--accent)",
+                  letterSpacing: "0.6px",
+                  marginBottom: "var(--space-2)",
+                }}
+              >
+                {r.num}
+              </div>
+              <div
+                style={{
+                  fontSize: "15px",
+                  fontWeight: 700,
+                  color: "var(--text-primary)",
+                  marginBottom: "var(--space-2)",
+                  letterSpacing: "-0.3px",
+                }}
+              >
+                {r.title}
+              </div>
+              <p
+                style={{
+                  fontSize: "13px",
+                  lineHeight: 1.6,
+                  color: "var(--text-secondary)",
+                }}
+              >
+                {r.detail}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <Note>
+          <strong>원가·조리 영향.</strong> 즉석밥 동봉으로 원가 +1,500~2,000원/세트 수준이며,
+          판매가 32,000원 내 흡수 가능합니다. 조리 흐름도 간결해집니다 — 즉석밥 1분 30초 →
+          육수·고명·양념장 데우기 → 한 그릇에 말기. 별도 준비물 없이 완성됩니다.
+        </Note>
+      </Section>
+
+      {/* 09. 포지셔닝 */}
+      <Section title="09. 포지셔닝 메시지">
         <div
           style={{
             background: "var(--bg-surface)",
@@ -1419,8 +1593,8 @@ export default function KurlyOnlyPage() {
         </div>
       </Section>
 
-      {/* 09. 실행 로드맵 */}
-      <Section title="09. 실행 로드맵">
+      {/* 10. 실행 로드맵 */}
+      <Section title="10. 실행 로드맵">
         <div
           style={{
             display: "flex",
@@ -1487,8 +1661,8 @@ export default function KurlyOnlyPage() {
         </div>
       </Section>
 
-      {/* 10. 대표님 확인 필요 - 2가지 */}
-      <Section title="10. 대표님 확인 필요 사항" subtitle="본 보고서 진행을 위한 두 가지 결정">
+      {/* 11. 대표님 확인 필요 - 2가지 */}
+      <Section title="11. 대표님 확인 필요 사항" subtitle="본 보고서 진행을 위한 두 가지 결정">
         <div
           style={{
             display: "flex",
@@ -1587,8 +1761,8 @@ export default function KurlyOnlyPage() {
         </div>
       </Section>
 
-      {/* 11. 출처 */}
-      <Section title="11. 데이터 출처">
+      {/* 12. 출처 */}
+      <Section title="12. 데이터 출처">
         <div
           style={{
             background: "var(--bg-surface)",
