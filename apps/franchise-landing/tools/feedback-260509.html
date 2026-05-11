@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0e763c" />
+<title>라이옥 LP 피드백 (260509)</title>
+<style>
+  :root {
+    --green: #0e763c;
+    --green-soft: #e6f4eb;
+    --yellow: #d97706;
+    --yellow-soft: #fef3c7;
+    --gray: #6b6b70;
+    --gray-soft: #f2f2f4;
+    --red: #c5283d;
+    --red-soft: #fde8ec;
+    --ink: #111114;
+    --muted: #6e6e74;
+    --line: #e6e6ea;
+    --bg: #fafafa;
+    --card: #ffffff;
+    --radius: 14px;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 14px rgba(0,0,0,.04);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+    font-size: 15px; line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+  }
+  body { padding-bottom: calc(120px + var(--safe-bottom)); }
+  header.app {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: saturate(180%) blur(10px);
+    -webkit-backdrop-filter: saturate(180%) blur(10px);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 16px 12px;
+  }
+  header.app h1 { margin: 0 0 6px; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+  header.app .sub { color: var(--muted); font-size: 12px; line-height: 1.4; }
+  header.app .progress { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  header.app .bar { flex: 1; min-width: 120px; height: 6px; background: var(--gray-soft); border-radius: 999px; overflow: hidden; }
+  header.app .bar > i { display: block; height: 100%; background: var(--green); width: 0%; transition: width .2s ease; border-radius: 999px; }
+  header.app .count { font-variant-numeric: tabular-nums; font-size: 12px; color: var(--muted); white-space: nowrap; }
+  header.app .actions { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  header.app .actions button {
+    flex: 1; min-width: 0; padding: 9px 6px; border: 1px solid var(--line);
+    background: #fff; border-radius: 10px; font-size: 11.5px; color: var(--ink);
+    cursor: pointer; touch-action: manipulation; white-space: nowrap;
+  }
+  header.app .actions button:active { background: var(--gray-soft); }
+  header.app .actions button.danger { color: var(--red); }
+  main { padding: 14px 14px 0; max-width: 720px; margin: 0 auto; }
+  section.group {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    margin: 0 0 12px; overflow: hidden; box-shadow: var(--shadow);
+  }
+  details > summary {
+    list-style: none; cursor: pointer; padding: 14px 16px;
+    display: flex; align-items: center; gap: 10px; user-select: none;
+  }
+  details > summary::-webkit-details-marker { display: none; }
+  details > summary .chev { font-size: 12px; color: var(--muted); transition: transform .2s; }
+  details[open] > summary .chev { transform: rotate(90deg); }
+  details > summary .title { flex: 1; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; }
+  details > summary .meta { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .group .body { padding: 0 14px 12px; }
+  .item { border-top: 1px solid var(--line); padding: 14px 0 4px; }
+  .item .id-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; flex-wrap: wrap; }
+  .item .badge {
+    font-size: 11px; padding: 2px 7px; background: var(--gray-soft); color: var(--muted);
+    border-radius: 999px; font-weight: 600; font-variant-numeric: tabular-nums;
+  }
+  .item .ts {
+    font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+  .item .state-pill {
+    font-size: 11px; padding: 2px 8px; border-radius: 999px; font-weight: 600;
+    margin-left: auto;
+  }
+  .item .state-apply  { background: var(--green-soft); color: var(--green); }
+  .item .state-modify { background: var(--yellow-soft); color: var(--yellow); }
+  .item .state-defer  { background: var(--gray-soft); color: var(--gray); }
+  .item .state-skip   { background: var(--red-soft); color: var(--red); }
+  .item h3 { margin: 2px 0 4px; font-size: 14.5px; font-weight: 600; letter-spacing: -0.005em; line-height: 1.4; }
+  .item .quote {
+    margin: 4px 0 8px; padding: 8px 10px; background: var(--gray-soft);
+    border-radius: 8px; color: #444; font-size: 12.5px; line-height: 1.5;
+  }
+  .item .quote b { color: var(--ink); font-weight: 600; }
+  .item .suggest { margin: 4px 0 10px; font-size: 13px; color: #2a2a2e; }
+  .item .suggest::before { content: "💡 "; }
+  .item .btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .item .btns button {
+    padding: 10px 6px; border: 1px solid var(--line); border-radius: 10px;
+    background: #fff; font-size: 12.5px; font-weight: 600; color: var(--ink);
+    cursor: pointer; min-height: 40px; touch-action: manipulation;
+    transition: transform .08s ease;
+  }
+  .item .btns button:active { transform: scale(0.97); }
+  .item .btns button.on.apply  { background: var(--green); color: #fff; border-color: var(--green); }
+  .item .btns button.on.modify { background: var(--yellow); color: #fff; border-color: var(--yellow); }
+  .item .btns button.on.defer  { background: var(--gray); color: #fff; border-color: var(--gray); }
+  .item .btns button.on.skip   { background: var(--red); color: #fff; border-color: var(--red); }
+  .item .note {
+    width: 100%; margin-top: 8px; padding: 9px 10px; border: 1px solid var(--line);
+    border-radius: 10px; font: inherit; font-size: 13px; resize: vertical;
+    min-height: 56px; background: #fff;
+  }
+  .item .note:focus { outline: 2px solid var(--green); outline-offset: -1px; }
+  .item .note-hint { display: block; font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .add-row { padding: 12px 0; }
+  .add-row textarea {
+    width: 100%; padding: 10px; border: 1px dashed var(--line); border-radius: 10px;
+    font: inherit; font-size: 13px; min-height: 64px; background: #fff;
+  }
+  .add-row .add-section {
+    width: 100%; margin-top: 6px; padding: 9px 10px; border: 1px solid var(--line);
+    border-radius: 10px; font: inherit; font-size: 13px; background: #fff;
+  }
+  .add-row .row { display: flex; gap: 6px; margin-top: 6px; }
+  .add-row button {
+    padding: 9px 12px; border: 1px solid var(--green); background: var(--green); color: #fff;
+    border-radius: 10px; font-size: 12.5px; font-weight: 600; cursor: pointer;
+  }
+  .add-row button.ghost { background: #fff; color: var(--green); }
+  .add-list { display: flex; flex-direction: column; gap: 6px; }
+  .add-list .pill {
+    display: flex; gap: 8px; padding: 8px 10px; background: var(--gray-soft);
+    border-radius: 8px; font-size: 12.5px; align-items: flex-start;
+  }
+  .add-list .pill .sec { color: var(--green); font-weight: 600; flex-shrink: 0; }
+  .add-list .pill .rm {
+    margin-left: auto; border: none; background: transparent; color: var(--red);
+    font-weight: 700; cursor: pointer; padding: 0 2px;
+  }
+  footer.bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+    background: rgba(255,255,255,.96); backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    padding: 12px 14px calc(12px + var(--safe-bottom));
+  }
+  footer.bar .stats {
+    display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;
+    font-size: 12px; color: var(--muted);
+  }
+  footer.bar .stats b { font-size: 13px; color: var(--ink); font-variant-numeric: tabular-nums; }
+  footer.bar .submit {
+    width: 100%; padding: 14px; background: var(--green); color: #fff;
+    border: none; border-radius: 12px; font-size: 15px; font-weight: 700;
+    cursor: pointer; touch-action: manipulation;
+  }
+  footer.bar .submit:disabled { opacity: .5; cursor: not-allowed; }
+  footer.bar .submit:active:not(:disabled) { background: #0b5f30; }
+  .toast {
+    position: fixed; left: 50%; bottom: 130px; transform: translateX(-50%) translateY(8px);
+    background: #111; color: #fff; padding: 11px 16px; border-radius: 999px;
+    font-size: 13px; opacity: 0; pointer-events: none;
+    transition: opacity .25s, transform .25s; z-index: 40;
+    max-width: calc(100% - 32px); text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .modal {
+    position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 50;
+    display: none; align-items: flex-end; justify-content: center;
+  }
+  .modal.show { display: flex; }
+  .modal .sheet {
+    width: 100%; max-width: 720px; background: #fff; border-radius: 16px 16px 0 0;
+    padding: 16px 16px calc(16px + var(--safe-bottom));
+    max-height: 85vh; display: flex; flex-direction: column;
+  }
+  .modal h2 { margin: 0 0 4px; font-size: 16px; }
+  .modal p.note { margin: 0 0 12px; font-size: 12.5px; color: var(--muted); }
+  .modal textarea {
+    width: 100%; flex: 1; min-height: 220px; padding: 10px;
+    border: 1px solid var(--line); border-radius: 10px;
+    font: 12px/1.45 ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    resize: none; background: #fafafa; color: var(--ink);
+  }
+  .modal .actions { display: flex; gap: 8px; margin-top: 10px; }
+  .modal .actions button {
+    flex: 1; padding: 12px; border-radius: 10px; border: 1px solid var(--line);
+    background: #fff; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .modal .actions .primary { background: var(--green); color: #fff; border-color: var(--green); }
+  .info {
+    margin: 0 0 12px; padding: 10px 12px; background: #fff8e1; color: #6b4f00;
+    border: 1px solid #ffe8a3; border-radius: 10px; font-size: 12.5px;
+  }
+  @media (min-width: 720px) {
+    body { padding-bottom: 110px; }
+    .item .btns { grid-template-columns: repeat(4, minmax(0, 130px)); }
+  }
+</style>
+</head>
+<body>
+<header class="app">
+  <h1>라이옥 LP 피드백 (2026-05-09 줌미팅)</h1>
+  <div class="sub">대상: raeoak-franchise-landing.vercel.app · 황정화↔김성찬 · 31개 항목</div>
+  <div class="progress">
+    <div class="bar"><i id="bar"></i></div>
+    <div class="count"><b id="done">0</b> / <span id="total">31</span></div>
+  </div>
+  <div class="actions">
+    <button id="btn-all-apply">전체 반영</button>
+    <button id="btn-all-defer">전체 보류</button>
+    <button id="btn-expand">모두 펼치기</button>
+    <button id="btn-collapse">모두 접기</button>
+    <button id="btn-reset" class="danger">초기화</button>
+  </div>
+</header>
+
+<main>
+  <div class="info">
+    버튼으로 결정한 뒤 하단 <b>JSON 복사</b>를 누르세요. 자동으로 클립보드에 복사되며, 채팅창에 붙여넣으면 결정사항이 코드에 반영됩니다.<br />
+    결정은 자동 저장되어 새로고침해도 유지됩니다.
+  </div>
+  <div id="groups"></div>
+</main>
+
+<footer class="bar">
+  <div class="stats">
+    <div>결정 <b id="stat-done">0</b> · 미정 <b id="stat-pending">31</b></div>
+    <div><span id="stat-summary">반영 0 · 수정 0 · 보류 0 · 스킵 0</span></div>
+  </div>
+  <button class="submit" id="btn-submit">JSON 복사 + 채팅 붙여넣기</button>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal" id="modal">
+  <div class="sheet">
+    <h2>JSON 결과</h2>
+    <p class="note">자동 복사가 실패하면 아래 텍스트를 직접 복사해서 채팅에 붙여넣어 주세요.</p>
+    <textarea id="modal-text" readonly></textarea>
+    <div class="actions">
+      <button id="modal-copy" class="primary">다시 복사</button>
+      <button id="modal-close">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+// ─────────── 피드백 항목 데이터 (31개) ───────────
+const GROUPS = [
+  { key: "A", name: "전체 분위기", desc: "LP 전반적 톤·길이·강조 위계", items: [
+    { id: "A1", title: "LP 전체 길이를 늘려 설득 구조 강화",
+      ts: "전사록 1:54:04",
+      quote: "전체적으로 너무 짧은 느낌, 카드만 죽 나열되어 있어 스크롤이 쓱 지나감",
+      suggest: "Differentiator 세로 배치 + Process 세로 배치 + 신규 섹션 추가로 자연스럽게 길이 확보" },
+    { id: "A2", title: "강조 위계 도입 — 핵심 키워드 부각",
+      ts: "전사록 00:00:57",
+      quote: "다 똑같은 까만색·초록색 패턴이라 강조점이 안 보임. 오래 머물지 않고 스스로 넘기기 때문에 강조 포인트 필요",
+      suggest: "각 카드에서 '15시간', '월 1억', '단 6가지', '500만' 같은 핵심 키워드만 폰트 두께·크기·색상으로 위계 차등" },
+    { id: "A3", title: "사회적 증거(Social Proof) 보강",
+      ts: "전사록 1:48:33",
+      quote: "우리 주장만 있고 객관적 근거가 부족함",
+      suggest: "이홍렬TV 유튜브 클립, 인증 로고, 부산 12개점 매장 사진/리뷰 등을 시각 자료로 추가 (K1 유튜브 섹션과 연계)" },
+  ]},
+
+  { key: "B", name: "Hero", desc: "메인 헤드라인·간격", items: [
+    { id: "B1", title: "헤드라인 단축",
+      ts: "전사록 00:04:13",
+      quote: "현재: '14년간 줄 서서 먹는 월 1억 부산 쌀국수 맛집, 드디어 수도권에 본격적으로 진출합니다' — 너무 길다",
+      suggest: "짧게 압축. 예) '월 1억 부산 쌀국수, 수도권에서 시작합니다' + 보조문구로 '14년 줄 서서 먹는 부산 본점'" },
+    { id: "B2", title: "'월 1억' 폰트 위계 부각",
+      ts: "전사록 00:05:50",
+      quote: "'월 1억'은 크고 두껍게, '14년간 줄 서서 먹는'은 작고 얇게 — 보조 텍스트 느낌으로",
+      suggest: "Hero.tsx에서 '월 1억'만 font-weight 800·1.4em, 나머지는 weight 500·0.8em로 차등" },
+    { id: "B3", title: "헤드라인 줄 간격 확대",
+      ts: "전사록 00:07:58",
+      quote: "현재 줄간격이 너무 좁아 답답함",
+      suggest: "Hero h1 leading-tight → leading-snug 또는 leading-normal, 모바일에서 줄간 13~16px 여유" },
+  ]},
+
+  { key: "C", name: "Slogan", desc: "1인 운영 메시지", items: [
+    { id: "C1", title: "Slogan 어조 변경",
+      ts: "전사록 00:13:46",
+      quote: "'1인 운영에 최적화된 형태로 만들었습니다' → 좀 더 편한 어조",
+      suggest: "'혼자서도 운영할 수 있게 만들었습니다'로 교체 (data.ts SLOGAN.headline 2번째 줄)" },
+    { id: "C2", title: "'혼자서도' 키워드 강조",
+      ts: "전사록 00:13:13",
+      quote: "1인 운영이 핵심 셀링포인트인데 강조가 부족",
+      suggest: "Slogan.tsx에서 '혼자서도' 또는 '1인 운영'만 그린 색상 + bold 강조 처리" },
+  ]},
+
+  { key: "D", name: "Differentiator (라이옥이 다른 이유)", desc: "5장 카드 → 세로 + 카피·이미지 보강", items: [
+    { id: "D1", title: "Point 02 카피: 외주 차별화 어필",
+      ts: "전사록 00:20:49",
+      quote: "'본사가 직접 만들고, 전국 어디든 안정 배송' → '외부에 맡기지 않고 저희가 직접 만듭니다'가 더 강함",
+      suggest: "data.ts DIFFERENTIATORS[1].title/description을 외주 차별화 어조로 교체" },
+    { id: "D2", title: "Point 02 이미지: 라이옥푸드 로고+회사명만 부각",
+      ts: "전사록 00:21:53",
+      quote: "현재 welstory-trio.png에 삼성웰스토리 로고가 너무 부각됨. 우리 회사가 메인인데 삼성이 더 커보임",
+      suggest: "이미지 교체 — 라이옥푸드 로고+사명만 부각된 PB공장/물류 인포그래픽으로. 삼성웰스토리는 작은 보조 표기로" },
+    { id: "D3", title: "Point 05: '맛집' 키워드 추가",
+      ts: "전사록 00:24:52",
+      quote: "'블루리본·레드리본 2년 연속 공식 인증' — '맛집' 키워드가 빠져 임팩트 약함",
+      suggest: "title을 '블루리본·레드리본 2년 연속 공식 인증 맛집' 또는 '2년 연속 공식 인증받은 맛집' 식으로 교체" },
+    { id: "D4", title: "5장 카드 핵심 키워드 폰트 위계",
+      ts: "전사록 00:25:48",
+      quote: "'15시간', '월 1억', '단 6가지', '50년 전통' 같은 핵심 키워드만 부각 처리 없이 흘러감",
+      suggest: "Differentiator 카드 title에서 숫자/핵심 키워드만 큰 글씨+그린/bold 처리 (renderHighlightedTitle 헬퍼 도입)" },
+    { id: "D5", title: "가로 슬라이드 → 세로로 길게 나열",
+      ts: "전사록 02:01:06",
+      quote: "옆으로 넘겨봐야 하는 구조라 안 넘겨보고 그냥 지나칠 우려가 큼",
+      suggest: "Differentiator 섹션 가로 스크롤 제거, 5(→6)장 카드를 세로 그리드로 변경. 모바일 1열, 데스크톱 2열" },
+    { id: "D6", title: "Point 01 한우사골 육수 이미지 반영",
+      ts: "사용자 작업 대기",
+      quote: "현재 src가 빈 문자열(placeholder)",
+      suggest: "AI 생성 후 /images/에 추가, DIFFERENTIATORS[0].media.src에 경로 주입" },
+    { id: "D7", title: "신규 Point 06 — '국밥으로 매출 30% 증가' 카드 추가",
+      ts: "전사록 01:36:47 (본부장 추가 요청)",
+      quote: "'쌀국수 한 가지만 팔다가 베트남 국밥 도입 후 매출 30% 증가' — 가맹점주가 가장 좋아할 포인트",
+      suggest: "data.ts DIFFERENTIATORS에 6번째 카드 추가. title '쌀국수+베트남 국밥으로 / 매출 30% 증가', description '한 가지 메뉴로는 객단가가 낮습니다…' + 베트남 국밥 사진" },
+  ]},
+
+  { key: "E", name: "Menu", desc: "메인 메뉴 카드 — 조리시간·크기", items: [
+    { id: "E1", title: "'30초'/'1분' 크기·위치 부각",
+      ts: "전사록 00:28:51",
+      quote: "조리시간이 핵심인데 메뉴명 옆에 작게 표기되어 눈에 안 띔",
+      suggest: "Menu.tsx에서 cooking ('30초'/'1분')을 카드 상단 중앙에 큰 글씨로 배치, 메뉴명은 그 아래 작게" },
+    { id: "E2", title: "메뉴 카드 크기/이미지 비율 축소",
+      ts: "전사록 02:12:20",
+      quote: "현재 메뉴 카드가 너무 커서 모바일에서 이미지만 부각됨",
+      suggest: "이미지 영역을 16:10 또는 4:3으로 축소해 Differentiator 카드와 사이즈 통일감 유지" },
+    { id: "E3", title: "Differentiator Point 03 메뉴 6가지 평면컷",
+      ts: "사용자 작업 대기",
+      quote: "현재 DIFFERENTIATORS[2].media.src 빈 문자열",
+      suggest: "AI 생성 후 /images/에 추가, src 주입" },
+  ]},
+
+  { key: "F", name: "Profit (수익 시뮬레이션)", desc: "20평 운영 부각·이익률 조정", items: [
+    { id: "F1", title: "Highlight를 10평 → 20평 운영으로 교체",
+      ts: "전사록 00:53:19",
+      quote: "10평 매출 2,000만 / 영업이익 900만 — 가맹점주에게 너무 약한 hook. 20평 6,000만이 훨씬 강함",
+      suggest: "data.ts PROFIT.highlight를 20평 행 기반으로 교체 (매출 6,000만 / 영업이익 2,460만)" },
+    { id: "F2", title: "영업이익률 41% → 43%로 (기타 600만→500만 조정)",
+      ts: "전사록 00:54:49",
+      quote: "본부장 요청 — 40% 후반대로 어필. 기타 비용 600만(10%) → 500만(약 8%)으로 줄여 영업이익 2,460만→2,560만, 마진 41→43%",
+      suggest: "data.ts PROFIT.rows[1] etc:'500만 (8%)', profit:'2,560만', margin:'43%'로 갱신. 합계 검산 필요" },
+    { id: "F3", title: "Profit 타이틀에서 '1인' 표현 제거",
+      ts: "전사록 00:53:35",
+      quote: "20평 부각이면 '1인 운영'이라는 표현이 안 맞음. 1.5인 가능성 있어 상담 시 안내",
+      suggest: "highlight.label '10평 1인 운영' → '20평 운영' / 또는 '20평 다찌형' 등 1인 표현 제거" },
+    { id: "F4", title: "펼침 표에서 20평 행 강조 (선·박스·색)",
+      ts: "전사록 00:55:41",
+      quote: "20평 부분이 표 안에 묻혀버림. 박스·라인·색상으로 부각",
+      suggest: "Profit 펼침 표 row[1]을 그린 보더 또는 배경 highlight로. 빨간 박스는 '심플 이즈 베스트'에 어긋나니 그린 톤 권장" },
+    { id: "F5", title: "도넛 차트 영업이익률 강조 유지",
+      ts: "전사록 00:56:10",
+      quote: "이익률 그래픽 자체는 좋은 강조 — 유지하되 숫자만 43%로 업데이트",
+      suggest: "Profit 도넛 차트 percentage 값을 F2와 동기화 (45 → 43)" },
+  ]},
+
+  { key: "G", name: "Benefit (1,800만원 본사 지원)", desc: "금액 부각·마케팅 분리", items: [
+    { id: "G1", title: "각 카드 금액을 큰 글씨·그린 부각",
+      ts: "전사록 02:06:23",
+      quote: "500만/300만/500만/500만이 카드 본문 안에 묻혀있음. 가장 눈에 띄어야 함",
+      suggest: "Benefit.tsx에서 금액(500만/300만/500만/500만)을 카드 상단에 큰 그린 숫자로 배치, 제목은 그 아래" },
+    { id: "G2", title: "마케팅 카드 → 별도 채널 섹션으로 분리",
+      ts: "전사록 02:09:21",
+      quote: "마케팅 항목을 1,800만원 안에 묻지 말고, 별도 섹션으로 빼서 채널 로고(네이버·당근·인스타·블로그)를 보여주는 게 효과적",
+      suggest: "K2 마케팅 채널 섹션 신설과 연계. Benefit에서는 '오픈 마케팅 본사 직접 진행 500만원 상당' 카드만 유지" },
+  ]},
+
+  { key: "H", name: "Process (가맹 절차)", desc: "8단계 흐름", items: [
+    { id: "H1", title: "가로 스크롤 → 세로로 길게 나열",
+      ts: "전사록 02:01:59",
+      quote: "1·2·3·4 단계가 옆으로 흘러가 잘 안 보임. 그냥 지나칠 우려",
+      suggest: "Process 섹션 가로 스크롤 제거, 타임라인형 세로 배치로 변경 (좌측 step 번호 + 우측 설명)" },
+  ]},
+
+  { key: "I", name: "FAQ", desc: "상위 4개 질문 검토", items: [
+    { id: "I1", title: "상위 4개 질문 재검토 — 광고 유입자 관점",
+      ts: "전사록 01:35:48",
+      quote: "'음식점 운영 경험 없어도 가능?', '1인 운영 가능?' 등은 LP 본문에서 이미 답한 내용. FAQ에서 또 묻는 게 어색할 수 있음",
+      suggest: "FAQ 1~4번 중복성 검토. 차라리 '초기 자본 얼마?', '오픈까지 얼마?', '본사 지원 어떤?', '실패 시 어떻게?' 같은 광고 유입자 핵심 궁금증으로 교체" },
+  ]},
+
+  { key: "J", name: "Final CTA / Footer", desc: "카피 미세조정", items: [
+    { id: "J1", title: "'첫 가맹점주를 모십니다' → '첫' 제거",
+      ts: "전사록 01:58:41",
+      quote: "'첫' 가맹점이라는 표현이 부담스러울 수 있음. 검증 안 된 느낌",
+      suggest: "FOOTER.ctaHeadline → '수도권 라이옥, / 가맹점주를 모집합니다' 또는 '수도권 가맹점, / 함께 시작하실 분을 찾습니다'" },
+  ]},
+
+  { key: "K", name: "신규 섹션", desc: "사회적 증거·마케팅 채널", items: [
+    { id: "K1", title: "이홍렬TV 유튜브 클립 섹션 신설",
+      ts: "전사록 01:46:46",
+      quote: "이홍렬이 '빌딩 사시겠네요'라고 멘트한 클립이 있음. 사회적 증거로 강력",
+      suggest: "신규 SocialProof 섹션 추가. 유튜브 썸네일 + '빌딩 사시겠네요' 인용 + 영상 클릭 시 유튜브 이동. 영상 URL 필요" },
+    { id: "K2", title: "마케팅 채널 별도 섹션 신설",
+      ts: "전사록 02:09:21",
+      quote: "본사가 어떤 채널로 마케팅하는지 명확히 보여줘야 함 — 네이버·당근·인스타·블로그",
+      suggest: "Benefit 다음에 신규 MarketingChannels 섹션 추가. 네이버 플레이스/당근/인스타/블로그 로고 그리드. 'X개월간 본사가 직접' 코멘트" },
+  ]},
+
+  { key: "L", name: "디자인 톤 (종합)", desc: "전체 톤 가이드", items: [
+    { id: "L1", title: "LP 전체 흐름 — 짧다는 느낌 해소",
+      ts: "전사록 02:02:11",
+      quote: "A1·D5·H1·K1·K2 종합 효과. 클라이언트 마음에 드는 방향으로 가되 레퍼런스가 충분히 쌓일 때까지 보수적으로",
+      suggest: "A1·D5·H1·K1·K2 모두 반영하면 자연스럽게 길이 확보. '심플 이즈 베스트' 컨셉은 유지" },
+  ]},
+];
+
+// ─────────── 상태 관리 ───────────
+const STORAGE_KEY = "raeoak-feedback-260509";
+const TOTAL = GROUPS.reduce((n, g) => n + g.items.length, 0);
+document.getElementById("total").textContent = String(TOTAL);
+
+const STATE = {
+  decisions: {},   // { id: { decision, note } }
+  additional: [],  // [{ text, section }]
+};
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    if (parsed && typeof parsed === "object") {
+      STATE.decisions = parsed.decisions || {};
+      STATE.additional = Array.isArray(parsed.additional) ? parsed.additional : [];
+    }
+  } catch (e) { console.warn("load fail", e); }
+}
+let saveTimer = null;
+function saveState() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE)); }
+    catch (e) { console.warn("save fail", e); }
+  }, 250);
+}
+
+// ─────────── 렌더링 ───────────
+function el(tag, attrs, ...children) {
+  const node = document.createElement(tag);
+  if (attrs) {
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === "class") node.className = v;
+      else if (k === "html") node.innerHTML = v;
+      else if (k.startsWith("on") && typeof v === "function") node.addEventListener(k.slice(2), v);
+      else if (v !== false && v != null) node.setAttribute(k, v);
+    }
+  }
+  for (const c of children) {
+    if (c == null || c === false) continue;
+    node.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+  }
+  return node;
+}
+
+function renderItem(item) {
+  const current = STATE.decisions[item.id] || { decision: null, note: "" };
+
+  const noteEl = el("textarea", {
+    class: "note",
+    placeholder: "선택 입력 — 수정 카피, 추가 코멘트, 보류 사유 등",
+    rows: 2,
+  });
+  noteEl.value = current.note || "";
+  noteEl.addEventListener("input", () => {
+    if (!STATE.decisions[item.id]) STATE.decisions[item.id] = { decision: null, note: "" };
+    STATE.decisions[item.id].note = noteEl.value;
+    saveState();
+  });
+
+  const pill = el("span", { class: "state-pill" });
+  function refreshPill() {
+    const d = STATE.decisions[item.id]?.decision;
+    pill.className = "state-pill" + (d ? " state-" + d : "");
+    pill.textContent = d === "apply" ? "반영" : d === "modify" ? "수정" : d === "defer" ? "보류" : d === "skip" ? "스킵" : "";
+  }
+  refreshPill();
+
+  const btnsWrap = el("div", { class: "btns" });
+  const opts = [
+    { val: "apply",  label: "반영" },
+    { val: "modify", label: "수정" },
+    { val: "defer",  label: "보류" },
+    { val: "skip",   label: "스킵" },
+  ];
+  const buttons = {};
+  for (const opt of opts) {
+    const b = el("button", { type: "button", "data-val": opt.val }, opt.label);
+    b.addEventListener("click", () => {
+      if (!STATE.decisions[item.id]) STATE.decisions[item.id] = { decision: null, note: noteEl.value };
+      const prev = STATE.decisions[item.id].decision;
+      const next = prev === opt.val ? null : opt.val;
+      STATE.decisions[item.id].decision = next;
+      refreshButtons();
+      refreshPill();
+      saveState();
+      refreshTotals();
+    });
+    buttons[opt.val] = b;
+    btnsWrap.appendChild(b);
+  }
+  function refreshButtons() {
+    const d = STATE.decisions[item.id]?.decision;
+    for (const opt of opts) {
+      const on = d === opt.val;
+      buttons[opt.val].className = on ? "on " + opt.val : "";
+    }
+  }
+  refreshButtons();
+
+  return el("div", { class: "item", "data-id": item.id },
+    el("div", { class: "id-row" },
+      el("span", { class: "badge" }, item.id),
+      el("span", { class: "ts" }, item.ts || ""),
+      pill,
+    ),
+    el("h3", null, item.title),
+    item.quote ? el("div", { class: "quote", html: "<b>전사록</b> · " + escapeHtml(item.quote) }) : null,
+    item.suggest ? el("div", { class: "suggest" }, item.suggest) : null,
+    btnsWrap,
+    noteEl,
+    el("span", { class: "note-hint" }, "수정 선택 시 어떻게 바꿀지 메모해 주세요. 보류·스킵은 사유만 적어도 됩니다."),
+  );
+}
+
+function renderGroup(g) {
+  const body = el("div", { class: "body" });
+  for (const item of g.items) body.appendChild(renderItem(item));
+
+  const details = el("details", { open: "" },
+    el("summary", null,
+      el("span", { class: "chev" }, "▶"),
+      el("span", { class: "title" }, g.key + ". " + g.name),
+      el("span", { class: "meta" }, g.items.length + "개"),
+    ),
+    body,
+  );
+  return el("section", { class: "group" }, details);
+}
+
+function renderAdditional() {
+  const list = el("div", { class: "add-list" });
+  function refreshList() {
+    list.innerHTML = "";
+    STATE.additional.forEach((it, idx) => {
+      list.appendChild(el("div", { class: "pill" },
+        el("span", { class: "sec" }, it.section || "기타"),
+        el("span", null, it.text),
+        el("button", { class: "rm", "aria-label": "삭제", onclick: () => {
+          STATE.additional.splice(idx, 1); saveState(); refreshList(); refreshTotals();
+        }}, "×"),
+      ));
+    });
+  }
+  refreshList();
+
+  const text = el("textarea", { placeholder: "전사록에 없는 추가 의견을 자유롭게 입력 (예: Counter 12개 → 13개로 수정)" });
+  const sec = el("input", { class: "add-section", type: "text", placeholder: "어느 섹션에 대한 의견인지 (예: Hero, Counter, FAQ 등)" });
+  const addBtn = el("button", { type: "button", onclick: () => {
+    const t = text.value.trim();
+    if (!t) return;
+    STATE.additional.push({ text: t, section: sec.value.trim() || "기타" });
+    text.value = ""; sec.value = "";
+    saveState(); refreshList(); refreshTotals();
+    toast("추가 항목 등록");
+  }}, "+ 추가");
+
+  const body = el("div", { class: "body" },
+    el("div", { class: "add-row" },
+      list,
+      text,
+      sec,
+      el("div", { class: "row" }, addBtn),
+    ),
+  );
+  return el("section", { class: "group" },
+    el("details", { open: "" },
+      el("summary", null,
+        el("span", { class: "chev" }, "▶"),
+        el("span", { class: "title" }, "+ 추가 의견 (자유 입력)"),
+        el("span", { class: "meta" }, "선택"),
+      ),
+      body,
+    ),
+  );
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+function renderAll() {
+  const root = document.getElementById("groups");
+  root.innerHTML = "";
+  for (const g of GROUPS) root.appendChild(renderGroup(g));
+  root.appendChild(renderAdditional());
+}
+
+// ─────────── 총계 / 진행률 ───────────
+function refreshTotals() {
+  let apply = 0, modify = 0, defer = 0, skip = 0;
+  for (const id of Object.keys(STATE.decisions)) {
+    const d = STATE.decisions[id]?.decision;
+    if (d === "apply") apply++;
+    else if (d === "modify") modify++;
+    else if (d === "defer") defer++;
+    else if (d === "skip") skip++;
+  }
+  const done = apply + modify + defer + skip;
+  const pending = TOTAL - done;
+  document.getElementById("done").textContent = String(done);
+  document.getElementById("stat-done").textContent = String(done);
+  document.getElementById("stat-pending").textContent = String(pending);
+  document.getElementById("stat-summary").textContent =
+    `반영 ${apply} · 수정 ${modify} · 보류 ${defer} · 스킵 ${skip}` +
+    (STATE.additional.length ? ` · 추가 ${STATE.additional.length}` : "");
+  document.getElementById("bar").style.width = (TOTAL ? (done / TOTAL * 100) : 0) + "%";
+  document.getElementById("btn-submit").disabled = done === 0 && STATE.additional.length === 0;
+}
+
+// ─────────── 일괄 액션 ───────────
+function bulkSet(decision) {
+  for (const g of GROUPS) for (const it of g.items) {
+    if (!STATE.decisions[it.id]) STATE.decisions[it.id] = { decision: null, note: "" };
+    STATE.decisions[it.id].decision = decision;
+  }
+  saveState();
+  renderAll();
+  refreshTotals();
+}
+
+document.getElementById("btn-all-apply").onclick = () => {
+  if (confirm("31개 항목을 모두 '반영'으로 설정합니다. 진행할까요?")) bulkSet("apply");
+};
+document.getElementById("btn-all-defer").onclick = () => {
+  if (confirm("31개 항목을 모두 '보류'로 설정합니다.")) bulkSet("defer");
+};
+document.getElementById("btn-reset").onclick = () => {
+  if (confirm("모든 결정을 초기화합니다. 되돌릴 수 없습니다.")) {
+    STATE.decisions = {}; STATE.additional = [];
+    localStorage.removeItem(STORAGE_KEY);
+    renderAll(); refreshTotals();
+    toast("초기화 완료");
+  }
+};
+document.getElementById("btn-expand").onclick = () => {
+  document.querySelectorAll("details").forEach((d) => d.open = true);
+};
+document.getElementById("btn-collapse").onclick = () => {
+  document.querySelectorAll("details").forEach((d) => d.open = false);
+};
+
+// ─────────── 토스트 ───────────
+let toastTimer = null;
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 1800);
+}
+
+// ─────────── JSON 빌드 + 제출 ───────────
+function buildJSON() {
+  const items = [];
+  for (const g of GROUPS) {
+    for (const it of g.items) {
+      const d = STATE.decisions[it.id];
+      if (!d || !d.decision) continue;
+      items.push({
+        id: it.id,
+        section: g.name,
+        label: it.title,
+        transcript_ts: it.ts || null,
+        decision: d.decision,
+        note: (d.note || "").trim(),
+      });
+    }
+  }
+  const summary = { apply: 0, modify: 0, defer: 0, skip: 0, total: TOTAL };
+  for (const x of items) summary[x.decision]++;
+  summary.decided = items.length;
+  summary.pending = TOTAL - items.length;
+
+  return {
+    session: "260509-zoom-feedback",
+    target: "raeoak-franchise-landing.vercel.app",
+    submitted_at: new Date().toISOString(),
+    summary,
+    items,
+    additional_items: STATE.additional.slice(),
+  };
+}
+
+async function submit() {
+  const payload = buildJSON();
+  const text = "```json\n" + JSON.stringify(payload, null, 2) + "\n```";
+  let copied = false;
+  try {
+    await navigator.clipboard.writeText(text);
+    copied = true;
+  } catch (e) {
+    console.warn("clipboard fail", e);
+  }
+  const modal = document.getElementById("modal");
+  document.getElementById("modal-text").value = text;
+  modal.classList.add("show");
+  if (copied) toast("클립보드 복사 완료. 채팅창에 붙여넣어 주세요.");
+  else toast("자동 복사 실패 — 텍스트를 직접 복사하세요.");
+}
+
+document.getElementById("btn-submit").onclick = submit;
+document.getElementById("modal-close").onclick = () => document.getElementById("modal").classList.remove("show");
+document.getElementById("modal-copy").onclick = async () => {
+  const ta = document.getElementById("modal-text");
+  try {
+    await navigator.clipboard.writeText(ta.value);
+    toast("복사 완료");
+  } catch {
+    ta.select(); document.execCommand?.("copy");
+    toast("복사 시도 — 안되면 길게 눌러 직접 복사하세요");
+  }
+};
+document.getElementById("modal").addEventListener("click", (e) => {
+  if (e.target.id === "modal") document.getElementById("modal").classList.remove("show");
+});
+
+// ─────────── 초기화 ───────────
+loadState();
+renderAll();
+refreshTotals();
+</script>
+</body>
+</html>
